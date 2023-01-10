@@ -1,5 +1,6 @@
-import { Button } from 'antd';
 import { Link } from 'react-router-dom';
+import { Button } from 'antd';
+
 const Component: React.FC = () => {
   return (
     <>

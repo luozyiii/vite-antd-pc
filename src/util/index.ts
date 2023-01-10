@@ -3,6 +3,6 @@
  * @return {Promise}
  */
 
-export function sleep(time: number = 300) {
+export function sleep(time = 300) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }

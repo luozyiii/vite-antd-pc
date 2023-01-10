@@ -1,7 +1,8 @@
-import { Card, Space, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { Card, Space, Button } from 'antd';
 import BearCom from './component/bear';
 import HelloWorld from './component/hello-world';
+import './index.scss';
 
 const Component: React.FC = () => {
   const nav = useNavigate();

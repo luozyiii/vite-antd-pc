@@ -1,5 +1,5 @@
-import { Button } from 'antd';
 import { useCallback, useState } from 'react';
+import { Button } from 'antd';
 import styles from './index.module.scss';
 
 const Component: React.FC = () => {

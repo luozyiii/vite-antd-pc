@@ -1,8 +1,7 @@
 import AppLayout from '@/component/layout';
+import Home from '@/page/home';
 import base from './base';
 import system from './system';
-
-import Home from '@/page/home';
 
 export default [
   {

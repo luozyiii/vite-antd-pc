@@ -1,7 +1,7 @@
 import { lazy } from 'react';
+import NotFound from '@/page/not-found';
 import { delayPromise, lazyLoad } from './util';
 
-import NotFound from '@/page/not-found';
 const Login = lazy(() => delayPromise(import(/* webpackChunkName: "login" */ '@/page/login')));
 
 const routeConfig: any[] = [
