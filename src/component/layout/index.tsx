@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import RouteConfig from '@/route';
-import type { MenuProps } from 'antd/es/menu';
 import { icons } from './config';
 import styles from './index.module.scss';
+import type { MenuProps } from 'antd/es/menu';
 type MenuItemProps = Required<MenuProps>['items'][number];
 const { Header, Content, Sider } = Layout;
 
@@ -18,13 +18,13 @@ const AppLayout = () => {
   const [subKey, setSubKey] = useState<string[]>([]);
   const [collapsed, setCollapsed] = useState(false);
 
-  const getMenuTree = (menuList: MenuItemProps[], len: number = 99) => {
+  const getMenuTree = (menuList: MenuItemProps[], len = 99) => {
     let count = 0;
     function loop(arr: any) {
       count++;
       if (arr && arr.length > 0) {
         const newArr = arr.map((item: any) => {
-          let { index, isMenu, title, path, children, icon, ...other } = item;
+          const { index, isMenu, title, path, children, icon, ...other } = item;
           // 过滤非菜单路由
           if (isMenu === false) {
             return false;
@@ -98,7 +98,6 @@ const AppLayout = () => {
     const { pathname } = location;
     if (pathname) {
       const keys = pathname.split('/').slice(1);
-      console.log(keys);
       const mainKey = keys[0];
       setMainKey([mainKey]);
       setSubKey(keys);
