@@ -1,4 +1,4 @@
-import useBearStore from '../../useBearStore';
+import useBearStore from '@/store/useBearStore';
 
 const BearCom: React.FC = () => {
   const { bear } = useBearStore();
