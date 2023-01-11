@@ -16,6 +16,11 @@
     text-align: right;
     font-size: 12px;
     padding-right: 12px;
+    .logout {
+      color: orange;
+      padding-left: 12px;
+      cursor: pointer;
+    }
   }
 }
 .pageContent {

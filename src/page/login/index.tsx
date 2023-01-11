@@ -1,20 +1,27 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
+import useUserInfo from '@/store/useUserInfo';
 import styles from './index.module.scss';
 
 const Component: React.FC = () => {
-  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const nav = useNavigate();
+  const { setUserInfo, setToken } = useUserInfo();
 
   const handleLogin = useCallback(() => {
-    setIsLogin(true);
-  }, []);
+    setUserInfo({
+      name: 'leslie',
+      phone: '18825040603',
+    });
+    setToken('token1233333');
+    nav('/');
+  }, [nav, setToken, setUserInfo]);
 
   return (
     <div className={styles.loginPage}>
       <Button type="primary" onClick={handleLogin}>
         登录
       </Button>
-      <p>{isLogin ? '已登录' : '未登录'}</p>
     </div>
   );
 };

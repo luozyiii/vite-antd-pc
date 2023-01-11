@@ -2,15 +2,18 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import RouteConfig from '@/route';
+import useUserInfo from '@/store/useUserInfo';
 import { icons } from './config';
 import styles from './index.module.scss';
 import type { MenuProps } from 'antd/es/menu';
+
 type MenuItemProps = Required<MenuProps>['items'][number];
 const { Header, Content, Sider } = Layout;
 
 const AppLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isLogin, userInfo, reset } = useUserInfo();
 
   const [mainItems, setMainItems] = useState<MenuItemProps[]>([]);
   const [subItems, setSubItems] = useState<MenuItemProps[]>([]);
@@ -106,6 +109,11 @@ const AppLayout = () => {
     }
   }, [antdMenuTree, location]);
 
+  const logout = () => {
+    reset();
+    navigate('/login');
+  };
+
   return (
     <Layout>
       <Header className={styles.pageHeader}>
@@ -120,7 +128,14 @@ const AppLayout = () => {
           onClick={handleMainClick}
         />
         <div className={styles.userInfo}>
-          admin <span>退出</span>
+          {userInfo?.name}
+          {isLogin ? (
+            <span className={styles.logout} onClick={logout}>
+              退出
+            </span>
+          ) : (
+            <span>未登录 </span>
+          )}
         </div>
       </Header>
       <Content>

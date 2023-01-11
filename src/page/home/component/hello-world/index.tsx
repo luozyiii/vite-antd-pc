@@ -1,7 +1,7 @@
-import useBearStore from '@/store/useBearStore';
+import useBear from '@/store/useBear';
 
 const BearCom: React.FC = () => {
-  const { bear } = useBearStore();
+  const { bear } = useBear();
   return (
     <>
       <p>Hello World组件，值：{bear}</p>

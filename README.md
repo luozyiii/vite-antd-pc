@@ -85,7 +85,74 @@ module.exports = {
 }
 ```
 
-### react hook 状态管理
+### zustand：react hook 状态管理
+
+```ts
+// 根目录store
+// eg1: 简单使用 useBear.ts
+import { create } from '@/store';
+
+interface BearState {
+  bear: number;
+  increase: () => void;
+  reduce: () => void;
+}
+
+const useBearStore = create<BearState>()((set) => ({
+  bear: 0,
+  increase: () => set((state) => ({ bear: state.bear + 1 })),
+  reduce: () => set((state) => ({ bear: state.bear - 1 })),
+}));
+
+export default useBearStore;
+
+// eg2: 持久化用户信息
+import { create, persist, createJSONStorage } from '@/store';
+
+interface UserInfoProps {
+  name: string;
+  phone: string | number;
+}
+
+interface UserInfoState {
+  isLogin: boolean;
+  token: string;
+  userInfo: UserInfoProps | null;
+  setUserInfo: (value: UserInfoProps) => void;
+  setToken: (token: string) => void;
+  reset: () => void;
+}
+/**
+ * 登录信息
+ * token信息
+ * 用户信息
+ * 持久化storage
+ */
+const useUserInfoStore = create<UserInfoState>()(
+  persist(
+    (set) => ({
+      isLogin: false,
+      token: '',
+      userInfo: null,
+      setUserInfo: (userInfo: UserInfoProps) => {
+        set(() => ({ userInfo, isLogin: true }));
+      },
+      setToken: (token: string) => {
+        set(() => ({ token }));
+      },
+      reset: () => {
+        set(() => ({ userInfo: null, isLogin: false, token: '' }));
+      },
+    }),
+    {
+      name: 'USER_INFO',
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+);
+
+export default useUserInfoStore;
+```
 
 ### 常用库
 

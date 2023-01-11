@@ -1,8 +1,8 @@
 import { Space, Button } from 'antd';
-import useBearStore from '@/store/useBearStore';
+import useBear from '@/store/useBear';
 
 const BearCom: React.FC = () => {
-  const { bear, increase, reduce } = useBearStore();
+  const { bear, increase, reduce } = useBear();
   return (
     <>
       <p>当前值：{bear}</p>

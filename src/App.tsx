@@ -4,6 +4,7 @@ import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import RoutesConfig from '@/route';
 import theme from '@/style/theme.json';
+import './App.scss';
 
 const App: FC = () => {
   const Routes = () => {
