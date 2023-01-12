@@ -161,3 +161,28 @@ export default useUserInfoStore;
 - [date-fns：日期处理](https://www.npmjs.com/package/date-fns)
 
 - [zustand：状态管理](https://github.com/pmndrs/zustand)
+
+### 问题
+
+##### Qa: Cannot access '...' before initialization, es 循环依赖导致
+
+```ts
+// https://github.com/vitejs/vite/issues/3033
+// vite.config.ts
+export default defineConfig({
+  plugins: [
+    // your plugins,
+    {
+      name: 'singleHMR',
+      handleHotUpdate({ modules }) {
+        modules.map((m) => {
+          m.importedModules = new Set();
+          m.importers = new Set();
+        });
+
+        return modules;
+      },
+    },
+  ],
+});
+```
