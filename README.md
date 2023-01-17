@@ -1,19 +1,80 @@
 # vite-antd-pc
 
-vite + antd pc 模版
+vite + antd pc 模版 [github](https://github.com/luozyiii/vite-antd-pc)
 
-### 启动
+### 整体架构
+
+#### 基础
+
+###### [前端开发与构建工具 vite](https://cn.vitejs.dev/guide/)
+
+###### [vite 支持 react](https://www.npmjs.com/package/@vitejs/plugin-react)
+
+###### [用于构建用户界面的 JavaScript 库 React](https://react.docschina.org/)
+
+###### [路由 react-router](https://reactrouter.com/en/main)
+
+###### [react-router-dom](https://www.npmjs.com/package/react-router-dom)
+
+###### [组件库 antd](https://ant.design/index-cn)
+
+#### 工具库
+
+###### [基于 promise 的网络请求库 axios](https://www.axios-http.cn/)
+
+###### [实用工具集 loadsh-es](https://www.lodashjs.com/)
+
+###### [React hook 状态管理 zustand](https://github.com/pmndrs/zustand)
+
+###### [日期处理 date-fns](https://www.npmjs.com/package/date-fns)
+
+#### 编码规范
+
+###### [可组装的 JavaScript 和 JSX 检查工具 ESLint](http://eslint.cn/docs/user-guide/getting-started)
+
+###### [一个“有态度”的代码格式化工具 Prettier](https://www.prettier.cn/)
+
+###### [git commit 规范 commitlint](https://commitlint.js.org/#/)
+
+#### 目录
 
 ```bash
-npm run start
+├── .vscode                     # 该项目 vscode 配置
+├── config                      # 项目配置
+│   └── proxy.ts                # 代理
+├── public                      # 资源文件
+├── src                         # 源码目录
+│   ├── component               # 全局组件
+│   ├── page                    # 页面组件
+│   ├── route                   # 路由配置
+│   ├── store                   # zustand：react hook 状态管理
+│   ├── style                   # 样式自定义
+│   ├── util                    # 工具库
+│   │   └── index.ts            # 工具方法
+│   ├── app.tsx                 # 主组件
+│   ├── index.css               # 全局样式
+│   ├── main.tsx                # 主入口
+│   └── vite-env.d.ts
+├── .commitlintrc.js            # git commit 规范配置
+├── .eslintrc.js                # eslint 配置
+├── .gitignore                  # git忽略文件
+├── .prettierrc.js              # prettier 配置
+├── index.html                  # html模版
+├── package.json
+├── README.md                   # 文档说明
+├── tsconfig.json               # ts 配置
+└── tsconfig.node.json          # ts node 配置
+
 ```
 
-#### vite
+### 常用命令
 
-[vite](https://cn.vitejs.dev/)
-[vite 支持 react](https://www.npmjs.com/package/@vitejs/plugin-react)
-
-### react-router-dom v6
+```bash
+# 开发
+npm run start
+# 构建
+npm run build
+```
 
 ### eslint 配置教程
 
@@ -154,17 +215,9 @@ const useUserInfoStore = create<UserInfoState>()(
 export default useUserInfoStore;
 ```
 
-### 常用库
+### 遇到问题？
 
-- [lodash-es](https://www.npmjs.com/package/lodash-es)
-
-- [date-fns：日期处理](https://www.npmjs.com/package/date-fns)
-
-- [zustand：状态管理](https://github.com/pmndrs/zustand)
-
-### 问题
-
-##### Qa: Cannot access '...' before initialization, es 循环依赖导致
+##### Qa: Cannot access '...' before initialization? es module 循环引用导致
 
 ```ts
 // https://github.com/vitejs/vite/issues/3033
@@ -186,3 +239,7 @@ export default defineConfig({
   ],
 });
 ```
+
+继续思考其他解决方案
+
+### thank you
