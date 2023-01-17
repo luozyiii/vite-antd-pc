@@ -1,6 +1,15 @@
 # vite-antd-pc
 
-vite + antd pc 模版 [github](https://github.com/luozyiii/vite-antd-pc)
+vite 4 + react 18 + ts + react-router-dom v6 + zustand + antd 5
+
+### 常用命令
+
+```bash
+# 开发
+npm run start
+# 构建
+npm run build
+```
 
 ### 整体架构
 
@@ -67,15 +76,6 @@ vite + antd pc 模版 [github](https://github.com/luozyiii/vite-antd-pc)
 ├── tsconfig.json               # ts 配置
 └── tsconfig.node.json          # ts node 配置
 
-```
-
-### 常用命令
-
-```bash
-# 开发
-npm run start
-# 构建
-npm run build
 ```
 
 ### eslint 配置教程
