@@ -12,6 +12,8 @@ vite + antd pc 模版 [github](https://github.com/luozyiii/vite-antd-pc)
 
 ###### [用于构建用户界面的 JavaScript 库 React](https://react.docschina.org/)
 
+###### [类型系统 typescript](https://www.typescriptlang.org/)
+
 ###### [路由 react-router](https://reactrouter.com/en/main)
 
 ###### [react-router-dom](https://www.npmjs.com/package/react-router-dom)
