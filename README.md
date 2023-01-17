@@ -164,12 +164,9 @@ export default useUserInfoStore;
 
 ### 问题
 
-##### Qa: Cannot access '...' before initialization, es 循环依赖导致，vite 和 @vitejs/plugin-react 版本没对应上导致
+##### Qa: Cannot access '...' before initialization, es 循环依赖导致
 
 ```ts
-// 方法一：版本对应上即可解决
-
-// 解决方法二：
 // https://github.com/vitejs/vite/issues/3033
 // vite.config.ts
 export default defineConfig({
