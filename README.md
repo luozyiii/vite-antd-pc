@@ -148,6 +148,86 @@ module.exports = {
 }
 ```
 
+### git commit 规范
+
+#### 演示
+
+```bash
+git add .
+git commit -m 'xxx' # no no no
+
+git commit -m 'feat: 新功能' # yes
+```
+
+| 类型     | 描述                                                   |
+| -------- | ------------------------------------------------------ |
+| build    | 编译相关的修改，例如发布版本、对项目构建或者依赖的改动 |
+| feat     | 新特性、新功能                                         |
+| fix      | 修复 bug                                               |
+| refactor | 代码重构                                               |
+| docs     | 文档修改                                               |
+| chore    | 其他修改, 比如改变构建流程、或者增加依赖库、工具等     |
+| style    | 代码格式修改, 注意不是 css 修改                        |
+| revert   | 回滚到上一个版本                                       |
+| ci       | 持续集成修改                                           |
+| perf     | 优化相关，比如提升性能、体验                           |
+| test     | 测试用例修改                                           |
+
+#### 配置教程
+
+```bash
+# 安装 lint-staged husky
+npm install lint-staged husky --save-dev
+# 在package.json中添加脚本
+npm set-script prepare "husky install"
+
+# 初始化husky,将 git hooks 钩子交由,husky执行
+npm run prepare
+# 初始化 husky, 会在根目录创建 .husky 文件夹
+npx husky add .husky/pre-commit "npx lint-staged"
+
+# 安装 commitlint 相关依赖
+npm install @commitlint/cli @commitlint/config-conventional --save-dev
+# .husky/commit-msg
+npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'
+```
+
+```ts
+// package.json 增加配置
+{
+  ...,
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss}": [
+      "prettier --write"
+    ]
+  }
+}
+// .commitlintrc.js 配置
+module.exports = {
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    'type-enum': [
+      2,
+      'always',
+      ['build', 'feat', 'fix', 'refactor', 'docs', 'chore', 'style', 'revert', 'ci', 'perf', 'test'],
+    ],
+    'type-case': [0],
+    'type-empty': [0],
+    'scope-empty': [0],
+    'scope-case': [0],
+    'subject-full-stop': [0, 'never'],
+    'subject-case': [0, 'never'],
+    'header-max-length': [0, 'always', 72],
+  },
+};
+
+```
+
 ### zustand：react hook 状态管理
 
 ```ts
