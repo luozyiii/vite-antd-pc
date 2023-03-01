@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, Space, Button } from 'antd';
+import PageContent from '@/component/page-content';
 import BearCom from './component/bear';
 import HelloWorld from './component/hello-world';
 import './index.scss';
@@ -12,7 +13,7 @@ const Component: React.FC = () => {
   };
 
   return (
-    <>
+    <PageContent rightArea={<Button>导出</Button>}>
       <p>首页功能测试</p>
       <Card>
         <Space>
@@ -34,7 +35,7 @@ const Component: React.FC = () => {
         <BearCom />
         <HelloWorld />
       </Card>
-    </>
+    </PageContent>
   );
 };
 

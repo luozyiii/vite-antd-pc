@@ -1,5 +1,7 @@
+import PageContent from '@/component/page-content';
+
 const Component: React.FC = () => {
-  return <>SystemMenu</>;
+  return <PageContent>SystemMenu</PageContent>;
 };
 
 Component.displayName = 'SystemMenu';

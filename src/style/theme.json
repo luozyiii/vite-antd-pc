@@ -1,5 +1,6 @@
 {
   "token": {
-    "colorPrimary": "#1da57a"
+    "colorPrimary": "#1da57a",
+    "borderRadius": 2
   }
 }

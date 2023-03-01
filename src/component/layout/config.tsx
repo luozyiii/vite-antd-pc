@@ -8,6 +8,7 @@ import {
   MenuOutlined,
   UserSwitchOutlined,
 } from '@ant-design/icons';
+import { IconHome } from '@/component/icons';
 
 // 菜单 icons 配置
 export const icons: any = {
@@ -19,4 +20,5 @@ export const icons: any = {
   SettingOutlined: SettingOutlined,
   MenuOutlined: MenuOutlined,
   UserSwitchOutlined: UserSwitchOutlined,
+  IconHome: IconHome,
 };

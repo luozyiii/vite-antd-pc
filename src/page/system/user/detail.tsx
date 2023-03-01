@@ -1,5 +1,7 @@
+import PageContent from '@/component/page-content';
+
 const Component: React.FC = () => {
-  return <>用户详情</>;
+  return <PageContent back>用户详情</PageContent>;
 };
 
 Component.displayName = 'SystemUserDetail';

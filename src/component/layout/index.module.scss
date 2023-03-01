@@ -1,41 +1,134 @@
-.pageHeader {
+.layout {
   display: flex;
-  padding: 0;
-  .logo {
-    width: 200px;
-    height: 64px;
-    text-align: center;
-    background-color: orange;
-  }
-  .mainMenu {
-    flex: 1;
-  }
-  .userInfo {
-    width: 100px;
+  flex-direction: column;
+  font-size: 14px;
+  .header {
+    display: flex;
+    height: 50px;
+    justify-content: space-between;
+    padding: 0 24px;
+    background: #0c091f;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.04);
     color: #fff;
-    text-align: right;
-    font-size: 12px;
-    padding-right: 12px;
-    .logout {
-      color: orange;
-      padding-left: 12px;
-      cursor: pointer;
+    align-items: center;
+    .logo {
+      height: 28px;
+    }
+    .rightArea {
+      display: flex;
+      align-items: center;
+      .headImg {
+        width: 28px;
+        height: 28px;
+        margin-left: 26px;
+        margin-right: 10px;
+      }
+    }
+    .userInfo {
+      display: flex;
+      align-items: center;
+      .name {
+        margin-right: 8px;
+      }
+    }
+  }
+  .content {
+    display: flex;
+    height: calc(100vh - 50px);
+    overflow: hidden;
+    .leftArea {
+      display: flex;
+      flex-direction: column;
+      background-color: #fff;
+    }
+    .customCollapsed {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 44px;
+      background: #ffffff;
+      box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.06);
+      text-align: right;
+      .btn {
+        position: absolute;
+        right: 14px;
+        border-width: 0;
+        &:hover {
+          border-color: transparent;
+        }
+      }
+    }
+    .siderBox {
+      display: flex;
+      flex-direction: column;
+      background-color: #fff;
+      overflow-y: auto;
+      flex: 1;
+      :global(.ant-layout-sider) {
+        background-color: transparent;
+      }
+    }
+    .subMenu {
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    .mainContent {
+      position: relative;
+      overflow-y: auto;
     }
   }
 }
-.pageContent {
-  height: calc(100vh - 64px);
-  overflow: hidden;
-  .siderBox {
-    display: flex;
-    flex-direction: column;
+
+.searchBox {
+  position: relative;
+  .inputBox {
+    width: 378px;
+    height: 32px;
+    background: rgba(242, 243, 245, 0.16);
+    border-color: rgba(242, 243, 245, 0.16);
+    border-radius: 24px;
+    :global(.ant-input-prefix) {
+      color: #fff;
+    }
+    input {
+      padding-left: 6px;
+      border-radius: 24px;
+      color: #fff;
+      background-color: transparent;
+      &::placeholder {
+        color: rgba(216, 216, 216, 1);
+      }
+    }
   }
-  .subMenu {
-    flex: 1;
-    height: 100%;
-    overflow-y: auto;
-  }
-  .mainContent {
-    padding: 12px;
+  .resultBox {
+    position: absolute;
+    top: 38px;
+    width: 442px;
+    height: 292px;
+    background: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
+    border-radius: 2px;
+    z-index: 6;
+    padding: 10px;
+    h6 {
+      color: rgba(24, 26, 49, 0.8);
+      font-size: 12px;
+      padding: 8px 0 8px 14px;
+    }
+    .list {
+      color: rgba(24, 26, 49, 1);
+      font-size: 14px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      height: 260px;
+      overflow-y: auto;
+      li {
+        padding: 7px 14px;
+        &:hover {
+          background: #f8f8f9;
+        }
+      }
+    }
   }
 }

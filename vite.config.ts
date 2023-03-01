@@ -23,6 +23,17 @@ export default defineConfig(({ command }) => {
         legacy({
           targets: ['defaults', 'not IE 11'],
         }),
+      {
+        name: 'singleHMR',
+        handleHotUpdate({ modules }) {
+          modules.map((m) => {
+            m.importedModules = new Set();
+            m.importers = new Set();
+          });
+
+          return modules;
+        },
+      },
     ],
     css: {
       preprocessorOptions: {
