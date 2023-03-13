@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import AppLayout from '@/component/layout';
 import Home from '@/page/home';
 import NotFound from '@/page/not-found';
+import demo from './demo';
 import system from './system';
 import { withLoadingComponent } from './util';
 
@@ -21,6 +22,7 @@ export const businessRoutes = [
     icon: 'IconHome',
     element: <Home />,
   },
+  demo,
   system,
 ];
 

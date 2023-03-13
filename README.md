@@ -168,4 +168,16 @@ export default defineConfig({
 
 继续思考其他解决方案
 
+### antd form 表单封装
+
+```bash
+# input 类型
+input
+inputGroup
+textarea
+password
+
+#
+```
+
 ### thank you
