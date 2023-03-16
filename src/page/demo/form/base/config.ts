@@ -5,6 +5,7 @@ const fields: any[] = [
     name: 'phone',
     rules: [{ required: true, message: '请输入您的手机号!' }],
     cProps: {
+      maxLength: 11,
       placeholder: '请输入',
       // size: 'small',
       addonBefore: '+86',
@@ -85,6 +86,7 @@ const fields: any[] = [
     name: 'select',
     rules: [{ required: true, message: '请选择!' }],
     cProps: {
+      placeholder: '请选择',
       options: [
         { value: 'A', label: '选项A' },
         { value: 'B', label: '选项B' },

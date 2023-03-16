@@ -25,12 +25,10 @@ const BaseForm: React.FC = () => {
       <Card>
         <Form
           ref={formRef}
+          layout="inline"
           fields={fields}
           initialValues={{ checkbox: ['HuaWei'], switch: true }}
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 500 }}
-          requiredMark={true}
+          requiredMark={false}
         />
         <pre>{preStr}</pre>
         <Space>

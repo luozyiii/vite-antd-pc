@@ -50,7 +50,7 @@ const FormWarp = ({ fields, ...other }: FormProps, ref: any) => {
           if (['switch'].includes(type)) {
             itemProps.valuePropName = 'checked';
           }
-          if (shouldUpdate || displayRules) {
+          if (shouldUpdate && displayRules) {
             return (
               <Fragment key={index}>
                 <Form.Item noStyle shouldUpdate={shouldUpdate}>
