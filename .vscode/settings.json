@@ -2,12 +2,14 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": true,
-    "source.fixAll.eslint": true
-    // "source.organizeImports": true
+    "source.fixAll.eslint": true,
+    "source.organizeImports": false
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
   "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "aiXcoder.showTrayIcon": true
 }

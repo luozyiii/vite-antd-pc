@@ -7,9 +7,11 @@ interface FormItemProps {
   type: keyof typeof formItem;
   label: string;
   name: string;
+  shouldUpdate: any;
+  displayRules: any[];
   cProps?: {
     [key: string]: unknown;
-  }; // input 属性
+  };
   [key: string]: unknown;
 }
 
@@ -36,24 +38,48 @@ const FormWarp = ({ fields, ...other }: FormProps, ref: any) => {
     resetFields: () => {
       form.resetFields();
     },
+    setFieldsValue: (values: any) => {
+      form.setFieldsValue(values);
+    },
   }));
 
   return (
     <Form form={form} {...other}>
-      {fields?.map(({ type, cProps, ...itemProps }, index) => {
+      {fields?.map(({ type, cProps, shouldUpdate, displayRules, ...itemProps }, index) => {
         if (formItem[type]) {
           if (['switch'].includes(type)) {
             itemProps.valuePropName = 'checked';
           }
-          return (
-            <Fragment key={index}>
-              <Form.Item {...itemProps}>
-                {createElement(formItem[type], {
-                  ...cProps,
-                })}
-              </Form.Item>
-            </Fragment>
-          );
+          if (shouldUpdate || displayRules) {
+            return (
+              <Fragment key={index}>
+                <Form.Item noStyle shouldUpdate={shouldUpdate}>
+                  {({ getFieldValue }) => {
+                    let isDisplayNum = 0;
+                    const len = displayRules?.length;
+                    for (let index = 0; index < len; index++) {
+                      const ele = displayRules[index];
+                      if (ele.value?.includes(getFieldValue(ele.name))) {
+                        isDisplayNum++;
+                      }
+                    }
+                    if (len === isDisplayNum) {
+                      return <Form.Item {...itemProps}>{createElement(formItem[type], cProps as any)}</Form.Item>;
+                    }
+                    return null;
+                  }}
+                </Form.Item>
+              </Fragment>
+            );
+          } else {
+            return (
+              <Fragment key={index}>
+                <Form.Item shouldUpdate={shouldUpdate} {...itemProps}>
+                  {createElement(formItem[type], cProps as any)}
+                </Form.Item>
+              </Fragment>
+            );
+          }
         } else {
           return (
             <Fragment key={index}>

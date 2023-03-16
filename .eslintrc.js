@@ -29,10 +29,12 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  plugins: ['react', '@typescript-eslint', 'eslint-plugin-import'],
+  plugins: ['react', '@typescript-eslint', 'eslint-plugin-import', 'unused-imports'],
   rules: {
     // 注释符后添加空格
     'spaced-comment': ['error', 'always'],
+    'import/no-anonymous-default-export': [0],
+    'import/no-unused-modules': [1, { unusedExports: true }],
     // eslint-plugin-import 导入排序规则
     'import/order': [
       'error',
@@ -60,5 +62,13 @@ module.exports = {
         alphabetize: { order: 'asc', caseInsensitive: true },
       },
     ],
+    // unused-imports
+    'no-unused-vars': 'off', // or "@typescript-eslint/no-unused-vars": "off",
+    'unused-imports/no-unused-imports': 'error',
+    'unused-imports/no-unused-vars': [
+      'warn',
+      { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
+    ],
+    'react/display-name': 'off',
   },
 };

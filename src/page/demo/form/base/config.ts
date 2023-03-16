@@ -3,22 +3,21 @@ const fields: any[] = [
     type: 'input',
     label: '手机',
     name: 'phone',
-    rules: [{ required: true, message: 'Please input your phone!' }],
+    rules: [{ required: true, message: '请输入您的手机号!' }],
     cProps: {
-      placeholder: '请输入你的手机号',
+      placeholder: '请输入',
       // size: 'small',
       addonBefore: '+86',
       allowClear: true,
       // addonAfter: 'hi',
       // disabled: true,
     },
-    hidden: true,
   },
   {
     type: 'password',
     label: '密码',
     name: 'pwd',
-    rules: [{ required: true, message: 'Please input your password!' }],
+    rules: [{ required: true, message: '请输入您的密码!' }],
     cProps: {
       // visibilityToggle: false,
     },
@@ -31,14 +30,14 @@ const fields: any[] = [
     rules: [
       {
         required: true,
-        message: 'Please confirm your password!',
+        message: '请确认您的密码!',
       },
       ({ getFieldValue }: any) => ({
         validator(_, value) {
           if (!value || getFieldValue('pwd') === value) {
             return Promise.resolve();
           }
-          return Promise.reject(new Error('The two passwords that you entered do not match!'));
+          return Promise.reject(new Error('两个密码不一致!'));
         },
       }),
     ],
@@ -47,7 +46,7 @@ const fields: any[] = [
     type: 'textarea',
     label: '文本域',
     name: 'textarea',
-    rules: [{ required: true, message: 'Please input your textarea!' }],
+    rules: [{ required: true, message: '请输入!' }],
     cProps: {
       showCount: true,
       maxLength: 100,
@@ -59,7 +58,8 @@ const fields: any[] = [
     type: 'radio',
     label: '单选框',
     name: 'radio',
-    rules: [{ required: true, message: 'Please select your item!' }],
+    rules: [{ required: true, message: '请选择!' }],
+    shouldUpdate: true,
     cProps: {
       // direction: 'vertical',
       options: [
@@ -67,7 +67,6 @@ const fields: any[] = [
         { value: 'B', label: '选项B' },
       ],
     },
-    // shouldUpdate: true,
   },
   {
     type: 'checkbox',
@@ -75,17 +74,16 @@ const fields: any[] = [
     name: 'checkbox',
     cProps: {
       options: [
-        { value: 'A', label: 'Apple' },
-        { value: 'Apple2', label: 'Apple2' },
+        { value: 'HuaWei', label: 'HuaWei' },
+        { value: 'Apple', label: 'Apple' },
       ],
     },
-    shouldUpdate: ({ getFieldValue }: any) => getFieldValue('radio') === 'B',
   },
   {
     type: 'select',
     label: '选择器',
     name: 'select',
-    rules: [{ required: true, message: 'Please select your item!' }],
+    rules: [{ required: true, message: '请选择!' }],
     cProps: {
       options: [
         { value: 'A', label: '选项A' },
@@ -101,8 +99,8 @@ const fields: any[] = [
   {
     type: 'datepicker',
     label: '日期',
-    name: 'day',
+    name: 'date',
   },
 ];
 
-export { fields };
+export default fields;

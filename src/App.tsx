@@ -4,6 +4,7 @@ import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import RoutesConfig from '@/route';
 import theme from '@/style/theme.json';
+import 'dayjs/locale/zh-cn'; // fix antd datepicker日期出现英文问题
 import './App.scss';
 
 const App: FC = () => {

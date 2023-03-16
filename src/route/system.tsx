@@ -11,7 +11,6 @@ export default {
   path: 'system',
   title: '系统管理',
   icon: 'SettingOutlined',
-  redirect: '/system/user/list', // 重定向 点击可用
   children: [
     {
       path: 'menu',

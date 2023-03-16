@@ -21,13 +21,8 @@ const AppLayout = () => {
 
   const openKeys = getAllPath(location.pathname); // 当前展开的key
 
-  const handleClick = ({ item, key }: any) => {
-    const redirect = item?.props?.redirect;
-    if (redirect) {
-      nav(redirect);
-    } else {
-      nav(key);
-    }
+  const handleClick = ({ key }: any) => {
+    nav(key);
   };
 
   const toggleCollapsed = () => {

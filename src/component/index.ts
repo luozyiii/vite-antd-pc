@@ -1,3 +1,4 @@
 import Form from './form';
+import PageContent from './page-content';
 
-export { Form };
+export { PageContent, Form };
