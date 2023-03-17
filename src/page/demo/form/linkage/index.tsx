@@ -17,7 +17,7 @@ const LinkageForm: React.FC = () => {
   }, []);
 
   const handleReset = useCallback(() => {
-    formRef?.current?.resetFields();
+    formRef?.current?.reset();
   }, []);
 
   const handleClick = useCallback(() => {

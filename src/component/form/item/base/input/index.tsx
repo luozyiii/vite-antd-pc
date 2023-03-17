@@ -1,8 +1,5 @@
 import { Input } from 'antd';
-
-interface InputProps {
-  [key: string]: any;
-}
+import type { InputProps } from 'antd';
 
 const Comp = (props: InputProps) => {
   return <Input {...props} />;

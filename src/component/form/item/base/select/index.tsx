@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Select } from 'antd';
+import type { SelectProps } from 'antd';
 
-interface SelectProps {
+interface SProps extends SelectProps {
   fetch?: (params?: any) => Promise<any>;
   fetchParams?: any;
   responseHandler: (res: any) => any;
-  [key: string]: any;
 }
 
-const Comp = ({ fetch, fetchParams, responseHandler = (res: any) => res, ...other }: SelectProps) => {
-  const [options, setOptions] = useState([]);
+const Comp = ({ options, fetch, fetchParams, responseHandler = (res: any) => res, ...other }: SProps) => {
+  const [ops, setOps] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   const getOptions = useCallback(async () => {
@@ -17,20 +17,20 @@ const Comp = ({ fetch, fetchParams, responseHandler = (res: any) => res, ...othe
       setLoading(true);
       if (fetch) {
         const res = await fetch({ ...fetchParams });
-        setOptions(responseHandler(res));
+        setOps(responseHandler(res));
       } else {
-        setOptions(other.options || []);
+        setOps(options || []);
       }
     } finally {
       setLoading(false);
     }
-  }, [fetch, fetchParams, other.options, responseHandler]);
+  }, [fetch, fetchParams, responseHandler]);
 
   useEffect(() => {
     getOptions();
   }, [getOptions]);
 
-  return <Select loading={loading} {...other} options={options} />;
+  return <Select loading={loading} {...other} options={ops} />;
 };
 
 export default Comp;

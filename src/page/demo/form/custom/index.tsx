@@ -17,7 +17,7 @@ const CustomForm: React.FC = () => {
   }, []);
 
   const handleReset = useCallback(() => {
-    formRef?.current?.resetFields();
+    formRef?.current?.reset();
   }, []);
 
   return (

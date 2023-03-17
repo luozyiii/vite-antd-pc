@@ -1,9 +1,6 @@
 import { Input } from 'antd';
+import type { PasswordProps } from 'antd/es/input/Password';
 const { Password } = Input;
-
-interface PasswordProps {
-  [key: string]: any;
-}
 
 const Comp = (props: PasswordProps) => {
   return <Password {...props} />;

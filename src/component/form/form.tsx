@@ -1,33 +1,44 @@
-import { Fragment, forwardRef, useImperativeHandle, createElement } from 'react';
+import { Fragment, forwardRef, useImperativeHandle, createElement, useCallback } from 'react';
 import { Form } from 'antd';
 import formItem from '@/component/form/item';
-import type { FormInstance } from 'antd';
+import type { FormInstance, FormProps, FormItemProps } from 'antd';
 
-interface FormItemProps {
+interface FItemProps extends FormItemProps {
   type: keyof typeof formItem;
   label: string;
   name: string;
   shouldUpdate: any;
-  displayRules: any[];
+  displayRules: any[]; // 与 shouldUpdate 搭配使用，控制其显示隐藏
   cProps?: {
     [key: string]: unknown;
   };
-  [key: string]: unknown;
 }
 
-interface FormProps {
-  fields: FormItemProps[];
-  [key: string]: unknown;
+interface FProps extends FormProps {
+  fields: FItemProps[];
 }
 
-export interface FormRef extends Omit<FormInstance, 'resetFields'> {
-  getFieldsValue: () => void;
-  resetFields: () => void;
+export interface FormRef extends FormInstance {
+  reset: () => void;
 }
 
-const FormWarp = ({ fields, ...other }: FormProps, ref: any) => {
+const FormWarp = ({ fields, initialValues = {}, ...other }: FProps, ref: any) => {
   const [form] = Form.useForm();
 
+  // 区别于resetFields，仅仅重置 values
+  const resetFiledsValues = useCallback(() => {
+    const values = Object.assign({});
+    fields.forEach((field) => {
+      if (initialValues[field.name]) {
+        values[field.name] = initialValues[field.name];
+      } else {
+        values[field.name] = undefined;
+      }
+    });
+    form.setFieldsValue(values);
+  }, [initialValues]);
+
+  // 暴露的方法
   useImperativeHandle(ref, () => ({
     getFieldsValue: () => {
       return form.getFieldsValue();
@@ -41,10 +52,11 @@ const FormWarp = ({ fields, ...other }: FormProps, ref: any) => {
     setFieldsValue: (values: any) => {
       form.setFieldsValue(values);
     },
+    reset: resetFiledsValues,
   }));
 
   return (
-    <Form form={form} {...other}>
+    <Form form={form} initialValues={initialValues} {...other}>
       {fields?.map(({ type, cProps, shouldUpdate, displayRules, ...itemProps }, index) => {
         if (formItem[type]) {
           if (['switch'].includes(type)) {
@@ -64,7 +76,9 @@ const FormWarp = ({ fields, ...other }: FormProps, ref: any) => {
                       }
                     }
                     if (len === isDisplayNum) {
-                      return <Form.Item {...itemProps}>{createElement(formItem[type], cProps as any)}</Form.Item>;
+                      return (
+                        <Form.Item {...itemProps}>{createElement(formItem[type] as React.FC, cProps as any)}</Form.Item>
+                      );
                     }
                     return null;
                   }}
@@ -75,7 +89,7 @@ const FormWarp = ({ fields, ...other }: FormProps, ref: any) => {
             return (
               <Fragment key={index}>
                 <Form.Item shouldUpdate={shouldUpdate} {...itemProps}>
-                  {createElement(formItem[type], cProps as any)}
+                  {createElement(formItem[type] as React.FC, cProps as any)}
                 </Form.Item>
               </Fragment>
             );

@@ -1,7 +1,5 @@
 import { Switch } from 'antd';
-interface SwitchProps {
-  [key: string]: any;
-}
+import type { SwitchProps } from 'antd';
 
 const Comp = (props: SwitchProps) => {
   return <Switch {...props} />;

@@ -1,10 +1,7 @@
 import { Checkbox } from 'antd';
+import type { CheckboxGroupProps } from 'antd/es/checkbox/Group';
 
-interface CheckboxProps {
-  [key: string]: any;
-}
-
-const Comp = (props: CheckboxProps) => {
+const Comp = (props: CheckboxGroupProps) => {
   return <Checkbox.Group {...props}></Checkbox.Group>;
 };
 

@@ -1,8 +1,5 @@
 import { DatePicker } from 'antd';
-
-interface DatePickerProps {
-  [key: string]: any;
-}
+import type { DatePickerProps } from 'antd';
 
 const Comp = (props: DatePickerProps) => {
   return <DatePicker {...props} />;

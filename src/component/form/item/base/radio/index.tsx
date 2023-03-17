@@ -1,12 +1,11 @@
 import { Radio, Space } from 'antd';
+import type { RadioGroupProps } from 'antd';
 
-interface RadioProps {
-  options: any[];
+interface RProps extends RadioGroupProps {
   direction?: 'horizontal' | 'vertical';
-  [key: string]: any;
 }
 
-const Comp = ({ options, direction = 'horizontal', ...other }: RadioProps) => {
+const Comp = ({ options, direction = 'horizontal', ...other }: RProps) => {
   return (
     <Radio.Group {...other}>
       <Space direction={direction}>
