@@ -171,13 +171,20 @@ export default defineConfig({
 ### antd form 表单封装
 
 ```bash
-# input 类型
+# 基础
 input
-inputGroup
-textarea
 password
+textarea
+radio
+select
+checkbox
+switch
+datepicker
 
-#
+# checkbox select radio 的options 支持异步获取
+
+# 自定义
+priceUnit
 ```
 
 ### thank you

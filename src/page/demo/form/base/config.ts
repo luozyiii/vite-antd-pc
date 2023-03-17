@@ -1,3 +1,16 @@
+const getOptions = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        data: [
+          { id: 10, name: '张三' },
+          { id: 11, name: '李四' },
+        ],
+      });
+    }, 300);
+  });
+};
+
 const fields: any[] = [
   {
     type: 'input',
@@ -91,6 +104,19 @@ const fields: any[] = [
         { value: 'A', label: '选项A' },
         { value: 'B', label: '选项B' },
       ],
+    },
+  },
+  {
+    type: 'select',
+    label: '异步select',
+    name: 'asyncSelect',
+    rules: [{ required: true, message: '请选择!' }],
+    cProps: {
+      fetch: getOptions,
+      fetchParams: { role: 'ROLEA' },
+      responseHandler: (res: any) => res.data,
+      fieldNames: { label: 'name', value: 'id' },
+      placeholder: '请选择xxxxxx',
     },
   },
   {
