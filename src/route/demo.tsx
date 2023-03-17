@@ -3,6 +3,7 @@ import { withLoadingComponent } from './util';
 
 const BaseForm = lazy(() => import('@/page/demo/form/base'));
 const LinkageForm = lazy(() => import('@/page/demo/form/linkage'));
+const CustomForm = lazy(() => import('@/page/demo/form/custom'));
 
 export default {
   type: 'group',
@@ -16,6 +17,7 @@ export default {
       children: [
         { path: 'base', title: '基础表单', element: withLoadingComponent(<BaseForm />) },
         { path: 'linkage', title: '表单联动', element: withLoadingComponent(<LinkageForm />) },
+        { path: 'custom', title: '自定义表单', element: withLoadingComponent(<CustomForm />) },
       ],
     },
   ],

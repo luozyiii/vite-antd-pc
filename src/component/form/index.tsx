@@ -1,2 +1,2 @@
-import { default as Form } from './form-warp';
+import { default as Form } from './form';
 export default Form;

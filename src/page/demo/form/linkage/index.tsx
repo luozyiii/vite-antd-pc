@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from 'react';
 import { Button, Card, Space } from 'antd';
 import { PageContent } from '@/component';
 import { Form } from '@/component';
-import type { FormRef } from '@/component/form/form-warp';
+import type { FormRef } from '@/component/form/form';
 import fields from './config';
 
 const LinkageForm: React.FC = () => {

@@ -5,7 +5,7 @@ import { Form } from '@/component';
 import type { FormRef } from '@/component/form/form';
 import fields from './config';
 
-const BaseForm: React.FC = () => {
+const CustomForm: React.FC = () => {
   const [preStr, setPreStr] = useState('');
   const formRef = useRef<FormRef>();
 
@@ -27,7 +27,12 @@ const BaseForm: React.FC = () => {
           ref={formRef}
           layout="inline"
           fields={fields}
-          initialValues={{ checkbox: ['HuaWei'], switch: true }}
+          initialValues={{
+            price: {
+              number: 1,
+              unit: 'dollar',
+            },
+          }}
           requiredMark={false}
         />
         <pre>{preStr}</pre>
@@ -42,4 +47,4 @@ const BaseForm: React.FC = () => {
   );
 };
 
-export default BaseForm;
+export default CustomForm;
