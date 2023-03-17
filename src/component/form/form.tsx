@@ -7,8 +7,8 @@ interface FItemProps extends FormItemProps {
   type: keyof typeof formItem;
   label: string;
   name: string;
-  shouldUpdate: any;
-  displayRules: any[]; // 与 shouldUpdate 搭配使用，控制其显示隐藏
+  shouldUpdate?: any;
+  displayRules?: any[]; // 与 shouldUpdate 搭配使用，控制其显示隐藏
   cProps?: {
     [key: string]: unknown;
   };
@@ -37,6 +37,18 @@ const FormWarp = ({ fields, initialValues = {}, ...other }: FProps, ref: any) =>
     });
     form.setFieldsValue(values);
   }, [initialValues]);
+
+  const isShow = useCallback((displayRules: any[], getFieldValue: (name: string) => any) => {
+    let isDisplayNum = 0;
+    const len = displayRules?.length;
+    for (let index = 0; index < len; index++) {
+      const ele = displayRules[index];
+      if (ele.value?.includes(getFieldValue(ele.name))) {
+        isDisplayNum++;
+      }
+    }
+    return len === isDisplayNum;
+  }, []);
 
   // 暴露的方法
   useImperativeHandle(ref, () => ({
@@ -67,15 +79,7 @@ const FormWarp = ({ fields, initialValues = {}, ...other }: FProps, ref: any) =>
               <Fragment key={index}>
                 <Form.Item noStyle shouldUpdate={shouldUpdate}>
                   {({ getFieldValue }) => {
-                    let isDisplayNum = 0;
-                    const len = displayRules?.length;
-                    for (let index = 0; index < len; index++) {
-                      const ele = displayRules[index];
-                      if (ele.value?.includes(getFieldValue(ele.name))) {
-                        isDisplayNum++;
-                      }
-                    }
-                    if (len === isDisplayNum) {
+                    if (isShow(displayRules, getFieldValue)) {
                       return (
                         <Form.Item {...itemProps}>{createElement(formItem[type] as React.FC, cProps as any)}</Form.Item>
                       );
