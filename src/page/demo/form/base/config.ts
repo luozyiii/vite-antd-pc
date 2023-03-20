@@ -124,11 +124,6 @@ const fields: any[] = [
     label: '开关',
     name: 'switch',
   },
-  {
-    type: 'datepicker',
-    label: '日期',
-    name: 'date',
-  },
 ];
 
 export default fields;

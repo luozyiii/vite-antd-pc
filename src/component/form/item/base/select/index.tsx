@@ -24,7 +24,7 @@ const Comp = ({ options, fetch, fetchParams, responseHandler = (res: any) => res
     } finally {
       setLoading(false);
     }
-  }, [fetch, fetchParams, responseHandler]);
+  }, [fetch, fetchParams, options, responseHandler]);
 
   useEffect(() => {
     getOptions();
