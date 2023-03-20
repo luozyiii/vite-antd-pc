@@ -1,0 +1,17 @@
+.box {
+  background: #fff;
+  padding: 12px;
+  .formBox {
+  }
+  .actionBtn {
+    display: block;
+    width: 100%;
+    text-align: right;
+  }
+  :global(.ant-form-item-control) {
+    flex: 1;
+  }
+  :global(.ant-form-item) {
+    margin-right: 0;
+  }
+}

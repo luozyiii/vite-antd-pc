@@ -83,7 +83,6 @@ const AppLayout = () => {
         </div>
         <div className={styles.rightArea}>
           <div className={styles.userInfo}>
-            <span className={styles.name}>张三</span>
             <Dropdown
               menu={{
                 items: [
@@ -95,6 +94,7 @@ const AppLayout = () => {
               }}
             >
               <a onClick={(e) => e.preventDefault()}>
+                <span className={styles.name}>张三</span>
                 <Space>
                   <DownOutlined />
                 </Space>
