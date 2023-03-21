@@ -3,7 +3,6 @@ import AppLayout from '@/component/layout';
 import Home from '@/page/home';
 import NotFound from '@/page/not-found';
 import demo from './demo';
-import system from './system';
 import { withLoadingComponent } from './util';
 
 const Login = lazy(() => import('@/page/login'));
@@ -23,7 +22,6 @@ export const businessRoutes = [
     element: <Home />,
   },
   demo,
-  system,
 ];
 
 export default [
