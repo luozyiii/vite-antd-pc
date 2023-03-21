@@ -1,14 +1,41 @@
+import { useCallback, useMemo } from 'react';
 import { DatePicker } from 'antd';
+import dayjs from 'dayjs';
 import type { RangePickerProps } from 'antd/es/date-picker';
+import type { Dayjs } from 'dayjs';
 const { RangePicker } = DatePicker;
 
-// type CustomeRangePickerProps = Omit<RangePickerProps, 'value' | 'onChange'> & {
-//   value?: [string, string] | [];
-//   onChange?: (value: string) => void;
-// }
+type valueOriginalProps = [Dayjs | null, Dayjs | null] | null;
+type valueProps = (string | null)[] | undefined;
 
-const Comp = (props: RangePickerProps) => {
-  return <RangePicker {...props} />;
+type CustomeRangePickerProps = Omit<RangePickerProps, 'value' | 'onChange'> & {
+  value?: valueProps;
+  onChange?: (value: valueProps) => void;
+};
+
+const Comp = ({ value, onChange, format = 'YYYY-MM-DD HH:mm:ss', ...other }: CustomeRangePickerProps) => {
+  const handleOnChange = useCallback(
+    (dates: valueOriginalProps) => {
+      const v =
+        dates && dates.length
+          ? dates?.map((date) => {
+              return date ? dayjs(date).format(format as string) : null;
+            })
+          : undefined;
+      onChange?.(v);
+    },
+    [format, onChange],
+  );
+
+  const _v: valueOriginalProps = useMemo(() => {
+    return value && value.length
+      ? value.map((v) => {
+          return v ? dayjs(v) : null;
+        })
+      : null;
+  }, [value]);
+
+  return <RangePicker {...other} value={_v} onChange={handleOnChange} />;
 };
 
 export default Comp;

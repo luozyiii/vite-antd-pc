@@ -1,28 +1,31 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { DatePicker } from 'antd';
 import dayjs from 'dayjs';
 import type { DatePickerProps } from 'antd';
 import type { Dayjs } from 'dayjs';
 
 type valueOriginalProps = Dayjs | null;
+type valueProps = string | undefined;
 
 type CustomeDatePickerProps = Omit<DatePickerProps, 'value' | 'onChange'> & {
-  value?: string;
-  onChange?: (value: string) => void;
+  value?: valueProps;
+  onChange?: (value: valueProps) => void;
 };
 
-const Comp = ({ value, onChange, ...other }: CustomeDatePickerProps) => {
-  const [v, setV] = useState<valueOriginalProps>(value ? dayjs(value) : null);
-
+const Comp = ({ value, onChange, format = 'YYYY-MM-DD HH:mm:ss', ...other }: CustomeDatePickerProps) => {
   const handleOnChange = useCallback(
-    (date: valueOriginalProps, dateString: string) => {
-      setV(date);
-      onChange?.(dateString);
+    (date: valueOriginalProps) => {
+      const v = date ? dayjs(date).format(format as string) : undefined;
+      onChange?.(v);
     },
-    [onChange],
+    [format, onChange],
   );
 
-  return <DatePicker {...other} value={v} onChange={handleOnChange} />;
+  const _v: valueOriginalProps = useMemo(() => {
+    return value ? dayjs(value) : null;
+  }, [value]);
+
+  return <DatePicker {...other} value={_v} onChange={handleOnChange} />;
 };
 
 export default Comp;
