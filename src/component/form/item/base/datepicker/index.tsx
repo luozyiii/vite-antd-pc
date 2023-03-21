@@ -22,8 +22,8 @@ const Comp = ({ value, onChange, format = 'YYYY-MM-DD HH:mm:ss', ...other }: Cus
   );
 
   const _v: valueOriginalProps = useMemo(() => {
-    return value ? dayjs(value) : null;
-  }, [value]);
+    return value ? dayjs(value, format as string) : null;
+  }, [value, format]);
 
   return <DatePicker {...other} value={_v} onChange={handleOnChange} />;
 };

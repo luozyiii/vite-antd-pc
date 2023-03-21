@@ -4,7 +4,8 @@ const fields: any[] = [
     label: '日期',
     name: 'day',
     cProps: {
-      format: 'YYYY-MM-DD',
+      // format: 'YYYY-MM-DD',
+      showTime: true,
     },
   },
   {
@@ -44,7 +45,8 @@ const fields: any[] = [
     label: '日期范围',
     name: 'dayrange',
     cProps: {
-      format: 'YYYY-MM-DD',
+      // format: 'YYYY-MM-DD',
+      showTime: true,
     },
   },
   {
