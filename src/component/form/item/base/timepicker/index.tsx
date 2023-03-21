@@ -11,19 +11,18 @@ type CustomeDatePickerProps = Omit<TimePickerProps, 'value' | 'onChange'> & {
   value?: valueProps;
   onChange?: (value: valueProps) => void;
 };
-const preFormat = 'YYYY-MM-DD ';
 
 const Comp = ({ value, onChange, format = 'HH:mm:ss', ...other }: CustomeDatePickerProps) => {
   const handleOnChange = useCallback(
     (date: valueOriginalProps) => {
-      const v = date ? dayjs(date).format((preFormat + format) as string) : undefined;
+      const v = date ? dayjs(date).format(format as string) : undefined;
       onChange?.(v);
     },
     [format, onChange],
   );
 
   const _v: valueOriginalProps = useMemo(() => {
-    return value ? dayjs(value) : null;
+    return value ? dayjs(dayjs().format('YYYY-MM-DD') + ' ' + value) : null;
   }, [value]);
 
   return <TimePicker {...other} format={format} value={_v} onChange={handleOnChange} />;

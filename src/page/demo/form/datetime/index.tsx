@@ -23,7 +23,7 @@ const DateTimeForm: React.FC = () => {
   return (
     <PageContent>
       <Card>
-        <Form ref={formRef} layout="inline" fields={fields} initialValues={{}} requiredMark={false} />
+        <Form ref={formRef} layout="inline" fields={fields} initialValues={{ time: '05:00:00' }} requiredMark={false} />
         <pre>{preStr}</pre>
         <Space>
           <Button type="primary" onClick={handleSubmit}>
