@@ -22,8 +22,8 @@ const Comp = ({ value, onChange, format = 'HH:mm:ss', ...other }: CustomeDatePic
   );
 
   const _v: valueOriginalProps = useMemo(() => {
-    return value ? dayjs(dayjs().format('YYYY-MM-DD') + ' ' + value) : null;
-  }, [value]);
+    return value ? dayjs(value, format as string) : null;
+  }, [format, value]);
 
   return <TimePicker {...other} format={format} value={_v} onChange={handleOnChange} />;
 };

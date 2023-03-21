@@ -30,10 +30,10 @@ const Comp = ({ value, onChange, format = 'HH:mm:ss', ...other }: CustomeRangePi
   const _v: valueOriginalProps = useMemo(() => {
     return value && value.length
       ? value.map((v) => {
-          return v ? dayjs(dayjs().format('YYYY-MM-DD') + ' ' + v) : null;
+          return v ? dayjs(v, format as string) : null;
         })
       : null;
-  }, [value]);
+  }, [format, value]);
 
   return <RangePicker {...other} format={format} value={_v} onChange={handleOnChange} />;
 };
