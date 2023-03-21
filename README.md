@@ -171,7 +171,7 @@ export default defineConfig({
 ### antd form 表单封装
 
 ```bash
-# 基础
+# 基础表单
 input
 password
 textarea
@@ -179,12 +179,24 @@ radio
 select
 checkbox
 switch
-datepicker
 
 # checkbox select radio 的options 支持异步获取
 
-# 自定义
+# 日期时间
+datepicker
+daterangepicker
+timepicker
+timerangepicker
+
+# 自定义表单
 priceUnit
+
+# 表单联动
+/demo/form/linkage
+
+# 筛选表单
+filter-form
+
 ```
 
 ### thank you

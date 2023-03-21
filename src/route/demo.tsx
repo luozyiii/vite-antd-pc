@@ -6,7 +6,7 @@ const DateTimeForm = lazy(() => import('@/page/demo/form/datetime'));
 const LinkageForm = lazy(() => import('@/page/demo/form/linkage'));
 const CustomForm = lazy(() => import('@/page/demo/form/custom'));
 
-const TableForm = lazy(() => import('@/page/demo/table/table-form'));
+const FilterForm = lazy(() => import('@/page/demo/form/filter'));
 
 export default {
   type: 'group',
@@ -22,13 +22,8 @@ export default {
         { path: 'datetime', title: '日期时间', element: withLoadingComponent(<DateTimeForm />) },
         { path: 'linkage', title: '表单联动', element: withLoadingComponent(<LinkageForm />) },
         { path: 'custom', title: '自定义表单', element: withLoadingComponent(<CustomForm />) },
+        { path: 'filter', title: '筛选表单', element: withLoadingComponent(<FilterForm />) },
       ],
-    },
-    {
-      path: 'table',
-      title: '表格',
-      icon: 'FormOutlined',
-      children: [{ path: 'base', title: '基础查询', element: withLoadingComponent(<TableForm />) }],
     },
   ],
 };

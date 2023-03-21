@@ -1,12 +1,12 @@
 import React from 'react';
 import { Table } from 'antd';
-import { PageContent, TableForm } from '@/component';
+import { PageContent, FilterForm } from '@/component';
 import { fields } from './config';
 
 const TableFormPage: React.FC = () => {
   return (
     <PageContent>
-      <TableForm fields={fields} />
+      <FilterForm fields={fields} />
       <div style={{ padding: '0 12px 12px 12px', backgroundColor: '#fff' }}>
         <Table
           bordered

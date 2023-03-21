@@ -3,11 +3,11 @@ import { Button, Space } from 'antd';
 import Form from '../form';
 import styles from './index.module.scss';
 
-interface TableFormProps {
+interface FilterFormProps {
   fields: any[];
 }
 
-const TableForm: React.FC<TableFormProps> = ({ fields }) => {
+const FilterForm: React.FC<FilterFormProps> = ({ fields }) => {
   return (
     <div className={styles.box}>
       <div className={styles.formBox}>
@@ -23,4 +23,4 @@ const TableForm: React.FC<TableFormProps> = ({ fields }) => {
   );
 };
 
-export default TableForm;
+export default FilterForm;

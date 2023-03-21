@@ -1,4 +1,4 @@
-import Form, { TableForm } from './form';
+import Form, { FilterForm } from './form';
 import PageContent from './page-content';
 
-export { PageContent, Form, TableForm };
+export { PageContent, Form, FilterForm };
