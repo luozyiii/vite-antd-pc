@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Table } from 'antd';
 import { PageContent, FilterForm } from '@/component';
 import { fields } from './config';
 
-const TableFormPage: React.FC = () => {
+const FilterFormPage: React.FC = () => {
+  const onSearch = useCallback((params: any) => {
+    console.log('params', params);
+  }, []);
+
+  const onReset = useCallback(() => {
+    console.log('reset');
+  }, []);
+
   return (
     <PageContent>
-      <FilterForm fields={fields} defaultExpand />
+      <FilterForm fields={fields} defaultExpand onSearch={onSearch} onReset={onReset} />
       <div style={{ padding: '0 12px 12px 12px', backgroundColor: '#fff' }}>
         <Table
           bordered
@@ -29,4 +37,4 @@ const TableFormPage: React.FC = () => {
   );
 };
 
-export default TableFormPage;
+export default FilterFormPage;

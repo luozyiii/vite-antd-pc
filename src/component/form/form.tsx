@@ -1,5 +1,6 @@
 import { Fragment, forwardRef, useImperativeHandle, createElement, useCallback } from 'react';
 import { Col, Form, Row } from 'antd';
+import { omitBy } from 'lodash-es';
 import formItem from '@/component/form/item';
 import type { FormInstance, FormProps, FormItemProps } from 'antd';
 
@@ -57,17 +58,15 @@ const FormWarp = ({ fields, grid = false, responsive = false, initialValues = {}
   // 暴露的方法
   useImperativeHandle(ref, () => ({
     getFieldsValue: () => {
-      return form.getFieldsValue();
+      const params = form.getFieldsValue(true);
+      // 只剔除null、undefined; 不剔除空字符串
+      return omitBy(params, function (item) {
+        return item === null || item === undefined;
+      });
     },
-    validateFields: async () => {
-      await form.validateFields();
-    },
-    resetFields: () => {
-      form.resetFields();
-    },
-    setFieldsValue: (values: any) => {
-      form.setFieldsValue(values);
-    },
+    validateFields: async () => await form.validateFields(),
+    resetFields: () => form.resetFields(),
+    setFieldsValue: (values: any) => form.setFieldsValue(values),
     reset: resetFiledsValues,
   }));
 
