@@ -97,6 +97,15 @@ const fields: any[] = [
     label: '时间范围',
     name: 'timerange',
   },
+  {
+    type: 'timerangepicker',
+    label: '时间范围2',
+    name: 'timerange2',
+    cProps: {
+      format: 'HH:mm',
+      minuteStep: 15,
+    },
+  },
 ];
 
 export default fields;
