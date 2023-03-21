@@ -85,6 +85,14 @@ const fields: any[] = [
     name: 'time',
   },
   {
+    type: 'timepicker',
+    label: '时间2',
+    name: 'time2',
+    cProps: {
+      format: 'HH:mm',
+    },
+  },
+  {
     type: 'timerangepicker',
     label: '时间范围',
     name: 'timerange',
