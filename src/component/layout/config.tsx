@@ -9,6 +9,7 @@ import {
   UserSwitchOutlined,
   FormOutlined,
   SmileOutlined,
+  LayoutOutlined,
 } from '@ant-design/icons';
 import { IconHome } from '@/component/icons';
 
@@ -24,5 +25,6 @@ export const icons: any = {
   UserSwitchOutlined: UserSwitchOutlined,
   FormOutlined: FormOutlined,
   SmileOutlined: SmileOutlined,
+  LayoutOutlined: LayoutOutlined,
   IconHome: IconHome,
 };
