@@ -1,15 +1,13 @@
 const fields: any[] = [
   {
     type: 'input',
-    label: '条件一',
+    label: '筛选项一',
     name: 'name1',
-    span: 8,
   },
   {
     type: 'select',
-    label: '条件二',
+    label: '筛选项二',
     name: 'name2',
-    span: 8,
     cProps: {
       options: [
         { label: 'A', value: 'A' },
@@ -19,27 +17,58 @@ const fields: any[] = [
   },
   {
     type: 'input',
-    label: '条件三',
+    label: '筛选项三',
     name: 'name3',
-    span: 8,
   },
   {
     type: 'input',
-    label: '条件四',
+    label: '筛选项四',
     name: 'name4',
-    span: 8,
   },
   {
     type: 'input',
-    label: '条件五条件五',
+    label: '筛选项五',
     name: 'name5',
-    span: 8,
   },
   {
     type: 'input',
-    label: '条件六',
+    label: '筛选项六',
     name: 'name6',
-    span: 8,
+  },
+  {
+    type: 'input',
+    label: '筛选项七',
+    name: 'name7',
+  },
+  {
+    type: 'daterangepicker',
+    label: '筛选项八',
+    name: 'name8',
+    colType: 'large',
+    cProps: {
+      // format: 'YYYY-MM-DD',
+      showTime: true,
+    },
+  },
+  {
+    type: 'daterangepicker',
+    label: '筛选项九',
+    name: 'name9',
+    colType: 'large',
+    cProps: {
+      // format: 'YYYY-MM-DD',
+      showTime: true,
+    },
+  },
+  {
+    type: 'daterangepicker',
+    label: '筛选项十',
+    name: 'name10',
+    colType: 'large',
+    cProps: {
+      // format: 'YYYY-MM-DD',
+      showTime: true,
+    },
   },
 ];
 

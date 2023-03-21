@@ -10,6 +10,7 @@ interface FItemProps extends FormItemProps {
   shouldUpdate?: any;
   displayRules?: any[]; // 与 shouldUpdate 搭配使用，控制其显示隐藏
   span?: number;
+  colType?: 'default' | 'large';
   cProps?: {
     [key: string]: unknown;
   };
@@ -17,14 +18,15 @@ interface FItemProps extends FormItemProps {
 
 interface FProps extends FormProps {
   fields: FItemProps[];
-  grid?: boolean; // 是否启动 grid 布局
+  grid?: boolean; // grid 布局
+  responsive?: boolean; // 是否启动响应式, grid = true 使用
 }
 
 export interface FormRef extends FormInstance {
   reset: () => void;
 }
 
-const FormWarp = ({ fields, grid = false, initialValues = {}, ...other }: FProps, ref: any) => {
+const FormWarp = ({ fields, grid = false, responsive = false, initialValues = {}, ...other }: FProps, ref: any) => {
   const [form] = Form.useForm();
 
   // 区别于resetFields，仅仅重置 values
@@ -113,53 +115,58 @@ const FormWarp = ({ fields, grid = false, initialValues = {}, ...other }: FProps
         })}
       {grid && (
         <Row gutter={12}>
-          {fields?.map(({ type, cProps, shouldUpdate, displayRules, span, ...itemProps }, index) => {
-            if (formItem[type]) {
-              if (['switch'].includes(type)) {
-                itemProps.valuePropName = 'checked';
-              }
-              if (shouldUpdate && displayRules) {
-                return (
-                  <Col key={index} span={span}>
-                    <Form.Item noStyle shouldUpdate={shouldUpdate}>
-                      {({ getFieldValue }) => {
-                        if (isShow(displayRules, getFieldValue)) {
-                          return (
-                            <Form.Item {...itemProps}>
-                              {createElement(formItem[type] as React.FC, cProps as any)}
-                            </Form.Item>
-                          );
-                        }
-                        return null;
-                      }}
-                    </Form.Item>
-                  </Col>
-                );
+          {fields?.map(
+            ({ type, cProps, shouldUpdate, displayRules, span, colType = 'default', ...itemProps }, index) => {
+              // 响应式布局
+              const responsiveObj = responsive
+                ? {
+                    xs: { span: 24 },
+                    md: { span: colType === 'default' ? 12 : 24 },
+                    lg: { span: colType === 'default' ? 8 : 16 },
+                    xl: { span: colType === 'default' ? 6 : 12 },
+                    xxl: { span: colType === 'default' ? 4 : 8 },
+                  }
+                : undefined;
+
+              if (formItem[type]) {
+                if (['switch'].includes(type)) {
+                  itemProps.valuePropName = 'checked';
+                }
+                if (shouldUpdate && displayRules) {
+                  return (
+                    <Col key={index} span={span} {...responsiveObj}>
+                      <Form.Item noStyle shouldUpdate={shouldUpdate}>
+                        {({ getFieldValue }) => {
+                          if (isShow(displayRules, getFieldValue)) {
+                            return (
+                              <Form.Item {...itemProps}>
+                                {createElement(formItem[type] as React.FC, cProps as any)}
+                              </Form.Item>
+                            );
+                          }
+                          return null;
+                        }}
+                      </Form.Item>
+                    </Col>
+                  );
+                } else {
+                  return (
+                    <Col key={index} span={span} {...responsiveObj}>
+                      <Form.Item shouldUpdate={shouldUpdate} {...itemProps}>
+                        {createElement(formItem[type] as React.FC, cProps as any)}
+                      </Form.Item>
+                    </Col>
+                  );
+                }
               } else {
                 return (
-                  <Col
-                    key={index}
-                    span={span}
-                    xs={{ span: 24 }}
-                    md={{ span: 12 }}
-                    lg={{ span: 8 }}
-                    xl={{ span: 6 }}
-                    xxl={{ span: 4 }}
-                  >
-                    <Form.Item shouldUpdate={shouldUpdate} {...itemProps}>
-                      {createElement(formItem[type] as React.FC, cProps as any)}
-                    </Form.Item>
+                  <Col key={index} span={span} {...responsiveObj}>
+                    <Form.Item label="待开发组件">-</Form.Item>
                   </Col>
                 );
               }
-            } else {
-              return (
-                <Col key={index} span={span}>
-                  <Form.Item label="待开发组件">-</Form.Item>
-                </Col>
-              );
-            }
-          })}
+            },
+          )}
         </Row>
       )}
     </Form>

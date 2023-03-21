@@ -6,7 +6,7 @@ import { fields } from './config';
 const TableFormPage: React.FC = () => {
   return (
     <PageContent>
-      <FilterForm fields={fields} />
+      <FilterForm fields={fields} defaultExpand />
       <div style={{ padding: '0 12px 12px 12px', backgroundColor: '#fff' }}>
         <Table
           bordered

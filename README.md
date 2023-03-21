@@ -194,9 +194,20 @@ priceUnit
 # 表单联动
 /demo/form/linkage
 
-# 筛选表单
-filter-form
+
 
 ```
+
+#### 筛选表单 filter-form
+
+colType 属性
+
+| colType | default | large |
+| ------- | ------- | ----- |
+| xxl     | 4       | 8     |
+| xl      | 6       | 12    |
+| lg      | 8       | 16    |
+| md      | 12      | 24    |
+| xs      | 24      | 24    |
 
 ### thank you
