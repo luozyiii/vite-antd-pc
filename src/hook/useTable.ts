@@ -66,6 +66,12 @@ const useTable = ({ fetch, fetchParams }: UseTableParams): UseTableReturn => {
       } else {
         getDataSource(newPage, newPageSize);
       }
+      // 目前只考虑了 一个 page-table 的场景
+      const mainElement = document && document.getElementById('mainContent');
+      const tableElement = mainElement?.querySelectorAll('.pageTable')?.[0];
+      if (mainElement && tableElement) {
+        mainElement.scrollTop = tableElement?.offsetTop || 0;
+      }
     },
     [getDataSource, pageSize],
   );

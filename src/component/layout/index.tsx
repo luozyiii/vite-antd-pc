@@ -131,7 +131,7 @@ const AppLayout = () => {
             </Button>
           </div>
         </div>
-        <Content className={styles.mainContent}>
+        <Content className={styles.mainContent} id="mainContent">
           <Outlet />
         </Content>
       </Layout>

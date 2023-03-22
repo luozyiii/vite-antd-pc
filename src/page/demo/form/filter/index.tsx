@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Tag } from 'antd';
-import { PageContent, FilterForm, Table, TableColumn } from '@/component';
+import { PageContent, FilterForm, PageTable, TableColumn } from '@/component';
 import { useTable } from '@/hook';
 import { fields, columns } from './config';
 
@@ -30,31 +30,19 @@ const FilterFormPage: React.FC = () => {
     fetch: getList,
   });
 
-  // const onSearch = useCallback((params: any) => {
-  //   console.log('params', params);
-  // }, []);
-
-  // const onReset = useCallback(() => {
-  //   console.log('reset');
-  // }, []);
-
-  // console.log('onSearch', onSearch);
-
   return (
     <PageContent>
       <FilterForm fields={fields} defaultExpand onSearch={onSearch} onReset={onReset} />
-      <div style={{ padding: '0 12px 12px 12px', backgroundColor: '#fff' }}>
-        <Table {...tableProps} columns={columns} rowKey="a">
-          <TableColumn key="a">
-            {({ a }: any) => (
-              <>
-                <Tag color="red">热情</Tag>
-                {a}
-              </>
-            )}
-          </TableColumn>
-        </Table>
-      </div>
+      <PageTable {...tableProps} columns={columns} rowKey="a">
+        <TableColumn key="a">
+          {({ a }: any) => (
+            <>
+              <Tag color="red">热情</Tag>
+              {a}
+            </>
+          )}
+        </TableColumn>
+      </PageTable>
     </PageContent>
   );
 };
