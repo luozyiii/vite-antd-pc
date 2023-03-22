@@ -168,6 +168,12 @@ export default defineConfig({
 
 继续思考其他解决方案
 
+##### Qa: antd 样式在低版本浏览器无法识别
+
+Ant Design 支持最近 2 个版本的现代浏览器。如果你需要兼容旧版浏览器，请根据实际需求进行降级处理：[样式兼容](https://ant.design/docs/react/compatible-style-cn)
+
+[:where 兼容性](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:where#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E6%80%A7)
+
 ### antd form 表单封装
 
 ```bash
