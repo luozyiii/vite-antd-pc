@@ -25,11 +25,15 @@ const defaultPageSize = 10; // 分页选择默认值
 
 const useTable = ({ fetch, fetchParams }: UseTableParams): UseTableReturn => {
   const [dataSource, setDataSource] = useState([]);
-  const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [pageSize, setPageSize] = useState(defaultPageSize);
-  const [current, setCurrent] = useState(1);
   const [formData, setFormData] = useState({});
+  // 分页
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: defaultPageSize,
+    total: 0,
+    defaultPageSize: defaultPageSize,
+  });
 
   const getDataSource = useCallback(
     async (page = 1, pageSize = defaultPageSize, params?: any) => {
@@ -42,57 +46,59 @@ const useTable = ({ fetch, fetchParams }: UseTableParams): UseTableReturn => {
           ...fetchParams,
           ..._formData,
         };
-        console.log('表单参数', _params);
         const res = await fetch(_params);
         if (params) {
           setFormData(params);
         }
         setDataSource(res.list);
-        setTotal(res.total || 0);
-        setCurrent(page);
+        setPagination({
+          ...pagination,
+          total: res.total || 0,
+          current: page,
+          pageSize: pageSize,
+        });
         setLoading(false);
-        setPageSize(pageSize);
       } catch (error) {
         setLoading(false);
       }
     },
-    [fetch, fetchParams, formData],
+    [fetch, fetchParams, formData, pagination],
   );
 
   const handleOnChange = useCallback(
     (newPage: number, newPageSize: number) => {
-      if (pageSize !== newPageSize) {
+      if (pagination.pageSize !== newPageSize) {
         getDataSource(1, newPageSize);
       } else {
         getDataSource(newPage, newPageSize);
       }
       // 目前只考虑了 一个 page-table 的场景
       const mainElement = document && document.getElementById('mainContent');
-      const tableElement = mainElement?.querySelectorAll('.pageTable')?.[0];
+      const tableElement = mainElement?.querySelectorAll('.pageTable')?.[0] as HTMLElement;
       if (mainElement && tableElement) {
         mainElement.scrollTop = tableElement?.offsetTop || 0;
       }
     },
-    [getDataSource, pageSize],
+    [getDataSource, pagination],
   );
 
   // 查询
   const onSearch = useCallback(
     (params?: any) => {
-      getDataSource(1, pageSize, params);
+      getDataSource(1, pagination.pageSize, params);
     },
-    [pageSize, getDataSource],
+    [pagination.pageSize, getDataSource],
   );
 
   // 重置
   const onReset = useCallback(() => {
-    getDataSource(1, pageSize, {});
-  }, [getDataSource, pageSize]);
+    getDataSource(1, pagination.pageSize, {});
+  }, [getDataSource, pagination.pageSize]);
 
   // 刷新
   const onRefresh = useCallback(() => {
-    getDataSource(current, pageSize);
-  }, [current, getDataSource, pageSize]);
+    getDataSource(pagination.current, pagination.pageSize);
+  }, [getDataSource, pagination]);
 
   useEffect(() => {
     getDataSource();
@@ -103,11 +109,8 @@ const useTable = ({ fetch, fetchParams }: UseTableParams): UseTableReturn => {
       dataSource,
       loading,
       pagination: {
-        current,
-        pageSize,
-        total,
+        ...pagination,
         showSizeChanger: true,
-        defaultPageSize: pageSize,
         showTotal: (total: number) => `共 ${total} 条`,
         onChange: handleOnChange,
       },
