@@ -72,4 +72,10 @@ const fields: any[] = [
   },
 ];
 
-export { fields };
+const columns = [
+  { title: '字段一', key: 'a', width: 260 },
+  { title: '字段二', key: 'b' },
+  { title: '字段三', key: 'c' },
+];
+
+export { fields, columns };

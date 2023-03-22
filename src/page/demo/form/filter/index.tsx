@@ -1,37 +1,59 @@
 import React, { useCallback } from 'react';
-import { Table } from 'antd';
-import { PageContent, FilterForm } from '@/component';
-import { fields } from './config';
+import { Tag } from 'antd';
+import { PageContent, FilterForm, Table, TableColumn } from '@/component';
+import { useTable } from '@/hook';
+import { fields, columns } from './config';
 
 const FilterFormPage: React.FC = () => {
-  const onSearch = useCallback((params: any) => {
-    console.log('params', params);
+  const getList = useCallback(({ page, pageSize }: any) => {
+    return new Promise((resolve) => {
+      const list = Array(pageSize)
+        .fill(0)
+        .map((_, i) => {
+          const num = (page - 1) * pageSize + i + 1;
+          return {
+            a: 'a' + num,
+            b: 'b' + num,
+            c: 'c' + num,
+          };
+        });
+      setTimeout(() => {
+        resolve({
+          total: 201,
+          list: list,
+        });
+      }, 1000);
+    });
   }, []);
 
-  const onReset = useCallback(() => {
-    console.log('reset');
-  }, []);
+  const [tableProps, onSearch, onReset] = useTable({
+    fetch: getList,
+  });
+
+  // const onSearch = useCallback((params: any) => {
+  //   console.log('params', params);
+  // }, []);
+
+  // const onReset = useCallback(() => {
+  //   console.log('reset');
+  // }, []);
+
+  // console.log('onSearch', onSearch);
 
   return (
     <PageContent>
       <FilterForm fields={fields} defaultExpand onSearch={onSearch} onReset={onReset} />
       <div style={{ padding: '0 12px 12px 12px', backgroundColor: '#fff' }}>
-        <Table
-          bordered
-          columns={[
-            {
-              title: 'name',
-              dataIndex: 'name',
-              key: 'name',
-            },
-            {
-              title: 'age',
-              dataIndex: 'age',
-              key: 'age',
-            },
-          ]}
-          dataSource={[]}
-        />
+        <Table {...tableProps} columns={columns} rowKey="a">
+          <TableColumn key="a">
+            {({ a }: any) => (
+              <>
+                <Tag color="red">热情</Tag>
+                {a}
+              </>
+            )}
+          </TableColumn>
+        </Table>
       </div>
     </PageContent>
   );
