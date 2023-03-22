@@ -2,13 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { Select } from 'antd';
 import type { SelectProps } from 'antd';
 
-interface SProps extends SelectProps {
-  fetch?: (params?: any) => Promise<any>;
-  fetchParams?: any;
+interface CustomeSelectProps extends SelectProps {
+  fetch?: (params?: object) => Promise<any>;
+  fetchParams?: object;
   responseHandler: (res: any) => any;
 }
 
-const Comp = ({ options, fetch, fetchParams, responseHandler = (res: any) => res, ...other }: SProps) => {
+const Comp = ({ options, fetch, fetchParams, responseHandler = (res: any) => res, ...other }: CustomeSelectProps) => {
   const [ops, setOps] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 

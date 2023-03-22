@@ -83,6 +83,18 @@ const fields: any[] = [
     },
   },
   {
+    type: 'radio',
+    label: '单选框(异步)',
+    name: 'radio2',
+    rules: [{ required: true, message: '请选择!' }],
+    cProps: {
+      fetch: getOptions,
+      fetchParams: { role: 'ROLEA' },
+      responseHandler: (res: any) => res.data,
+      fieldNames: { label: 'name', value: 'id' },
+    },
+  },
+  {
     type: 'checkbox',
     label: '复选框',
     name: 'checkbox',
@@ -91,6 +103,17 @@ const fields: any[] = [
         { value: 'HuaWei', label: 'HuaWei' },
         { value: 'Apple', label: 'Apple' },
       ],
+    },
+  },
+  {
+    type: 'checkbox',
+    label: '复选框(异步)',
+    name: 'checkbox2',
+    cProps: {
+      fetch: getOptions,
+      fetchParams: { role: 'ROLEA' },
+      responseHandler: (res: any) => res.data,
+      fieldNames: { label: 'name', value: 'id' },
     },
   },
   {
