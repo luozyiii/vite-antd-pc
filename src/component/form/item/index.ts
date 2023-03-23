@@ -3,6 +3,7 @@ import Checkbox from './base/checkbox';
 import DatePicker from './base/datepicker';
 import DateRangePicker from './base/daterangepicker';
 import Input from './base/input';
+import Number from './base/number';
 import Password from './base/password';
 import Radio from './base/radio';
 import Select from './base/select';
@@ -14,6 +15,7 @@ import PriceUnit from './custom/price-unit';
 
 export default {
   input: Input,
+  number: Number,
   password: Password,
   textarea: TextArea,
   radio: Radio,

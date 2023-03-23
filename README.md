@@ -181,6 +181,7 @@ Ant Design 支持最近 2 个版本的现代浏览器。如果你需要兼容旧
 #### 基础表单
 
 - input
+- number
 - password
 - textarea
 - radio

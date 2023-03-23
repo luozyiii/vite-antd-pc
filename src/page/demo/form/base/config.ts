@@ -82,6 +82,15 @@ const fields: any[] = [
     },
   },
   {
+    type: 'number',
+    label: '数字',
+    name: 'number',
+    cProps: {
+      min: 1,
+      max: 10,
+    },
+  },
+  {
     type: 'password',
     label: '密码',
     name: 'pwd',
