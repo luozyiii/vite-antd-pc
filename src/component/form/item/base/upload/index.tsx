@@ -1,48 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Upload } from 'antd';
+import { uniqueId } from 'lodash-es';
 import DraggableUploadListItem from './DraggableUploadListItem';
 import styles from './index.module.scss';
 import type { DragEndEvent } from '@dnd-kit/core';
 import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
 
-const Comp = ({ maxCount = 1, ...other }: UploadProps) => {
+type CustomeUploadProps = UploadProps & {
+  value?: UploadFile[];
+  onChange?: (value: UploadFile[]) => void;
+};
+
+const Comp = ({ maxCount = 1, value = [], onChange, ...other }: CustomeUploadProps) => {
   const [loading, setLoading] = useState(false);
+
   // status: done | uploading | error
+  // percent 进度 50
   const [fileList, setFileList] = useState<UploadFile[]>([
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-2',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-3',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-4',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-5',
-      percent: 50,
-      name: 'image.png',
-      status: 'uploading',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
+    // {
+    //   uid: '-1',
+    //   name: 'image.png',
+    //   status: 'done',
+    //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    // },
   ]);
 
   const sensor = useSensor(PointerSensor, {
@@ -59,9 +42,30 @@ const Comp = ({ maxCount = 1, ...other }: UploadProps) => {
     }
   };
 
-  const onChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
+  const handleOnChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
+
+  useEffect(() => {
+    if (fileList?.length === 0 && value?.length > 0) {
+      const newValue: any = [];
+      const len = maxCount < value?.length ? maxCount : value?.length;
+      for (let i = 0; i < len; i++) {
+        const ele = value[i];
+        newValue.push({
+          uid: uniqueId(),
+          name: 'image.png',
+          status: 'done',
+          url: ele.url,
+        });
+      }
+      setFileList(newValue);
+    }
+  }, [value]);
+
+  useEffect(() => {
+    onChange?.(fileList);
+  }, [fileList, onChange]);
 
   return (
     <DndContext sensors={[sensor]} onDragEnd={onDragEnd}>
@@ -72,7 +76,7 @@ const Comp = ({ maxCount = 1, ...other }: UploadProps) => {
           maxCount={maxCount}
           listType="picture-card"
           fileList={fileList}
-          onChange={onChange}
+          onChange={handleOnChange}
           itemRender={(originNode, file) => <DraggableUploadListItem originNode={originNode} file={file} />}
         >
           {fileList.length >= maxCount ? null : (

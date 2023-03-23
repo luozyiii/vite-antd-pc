@@ -17,19 +17,48 @@ const UploadForm: React.FC = () => {
   }, []);
 
   const handleReset = useCallback(() => {
-    formRef?.current?.reset();
+    formRef?.current?.resetFields();
+  }, []);
+
+  const handleClick = useCallback(() => {
+    formRef?.current?.setFieldsValue({
+      upload: [
+        {
+          uid: '-1',
+          name: 'image.png',
+          status: 'done',
+          url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        },
+        {
+          uid: '-2',
+          name: 'image.png',
+          status: 'done',
+          url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        },
+      ],
+    });
   }, []);
 
   return (
     <PageContent>
       <Card>
-        <Form ref={formRef} fields={fields} initialValues={{}} requiredMark={false} />
+        <Form
+          ref={formRef}
+          fields={fields}
+          initialValues={{
+            upload: [],
+          }}
+          requiredMark={false}
+        />
         <pre>{preStr}</pre>
         <Space>
           <Button type="primary" onClick={handleSubmit}>
             提交
           </Button>
           <Button onClick={handleReset}>重置</Button>
+          <Button type="primary" onClick={handleClick}>
+            加载数据
+          </Button>
         </Space>
       </Card>
     </PageContent>
