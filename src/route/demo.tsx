@@ -12,6 +12,9 @@ const LinkageForm = lazy(() => import('@/page/demo/form/linkage'));
 const CustomForm = lazy(() => import('@/page/demo/form/custom'));
 const FilterForm = lazy(() => import('@/page/demo/form/filter'));
 
+// 项目
+const StorePage = lazy(() => import('@/page/demo/project/store'));
+
 export default {
   type: 'group',
   path: 'demo',
@@ -37,6 +40,12 @@ export default {
         { path: 'custom', title: '自定义表单', element: withLoadingComponent(<CustomForm />) },
         { path: 'filter', title: '筛选表单', element: withLoadingComponent(<FilterForm />) },
       ],
+    },
+    {
+      path: 'project',
+      title: '项目',
+      icon: 'ProjectOutlined',
+      children: [{ path: 'store', title: '状态管理', element: withLoadingComponent(<StorePage />) }],
     },
   ],
 };
