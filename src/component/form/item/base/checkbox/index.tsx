@@ -5,7 +5,7 @@ import type { CheckboxGroupProps } from 'antd/es/checkbox/Group';
 interface CustomeCheckboxGroupProps extends CheckboxGroupProps {
   fetch?: (params?: object) => Promise<any>;
   fetchParams?: object;
-  responseHandler: (res: any) => any;
+  responseHandler?: (res: any) => any;
   fieldNames?: { label: string; value: string };
 }
 

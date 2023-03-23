@@ -1,3 +1,4 @@
+import Cascader from './base/cascader';
 import Checkbox from './base/checkbox';
 import DatePicker from './base/datepicker';
 import DateRangePicker from './base/daterangepicker';
@@ -23,6 +24,7 @@ export default {
   daterangepicker: DateRangePicker,
   timepicker: TimePicker,
   timerangepicker: TimeRangePicker,
+  cascader: Cascader,
   // 自定义组件
   priceUnit: PriceUnit, // object
 };

@@ -6,7 +6,7 @@ interface CustomeRadioGroupProps extends RadioGroupProps {
   direction?: 'horizontal' | 'vertical';
   fetch?: (params?: object) => Promise<any>;
   fetchParams?: object;
-  responseHandler: (res: any) => any;
+  responseHandler?: (res: any) => any;
   fieldNames?: { label: string; value: string };
 }
 

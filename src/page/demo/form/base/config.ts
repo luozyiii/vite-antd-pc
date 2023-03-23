@@ -3,13 +3,67 @@ const getOptions = () => {
     setTimeout(() => {
       resolve({
         data: [
-          { id: 10, name: '张三' },
+          {
+            id: 10,
+            name: '张三',
+            sub: [
+              {
+                id: 101,
+                name: 'hi',
+              },
+              {
+                id: 102,
+                name: 'hi2',
+              },
+            ],
+          },
           { id: 11, name: '李四' },
         ],
       });
     }, 3000);
   });
 };
+
+interface Option {
+  value: string | number;
+  label: string;
+  children?: Option[];
+}
+
+const options: Option[] = [
+  {
+    value: 'zhejiang',
+    label: 'Zhejiang',
+    children: [
+      {
+        value: 'hangzhou',
+        label: 'Hangzhou',
+        children: [
+          {
+            value: 'xihu',
+            label: 'West Lake',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    value: 'jiangsu',
+    label: 'Jiangsu',
+    children: [
+      {
+        value: 'nanjing',
+        label: 'Nanjing',
+        children: [
+          {
+            value: 'zhonghuamen',
+            label: 'Zhong Hua Men',
+          },
+        ],
+      },
+    ],
+  },
+];
 
 const fields: any[] = [
   {
@@ -146,6 +200,29 @@ const fields: any[] = [
     type: 'switch',
     label: '开关',
     name: 'switch',
+  },
+  {
+    type: 'cascader',
+    label: '级联选择',
+    name: 'cascader',
+    rules: [{ required: true, message: '请选择!' }],
+    cProps: {
+      placeholder: '请选择',
+      options: options,
+    },
+  },
+  {
+    type: 'cascader',
+    label: '级联选择(异步)',
+    name: 'asyncCascader',
+    rules: [{ required: true, message: '请选择!' }],
+    cProps: {
+      fetch: getOptions,
+      fetchParams: { role: 'ROLEA' },
+      responseHandler: (res: any) => res.data,
+      fieldNames: { label: 'name', value: 'id', children: 'sub' },
+      placeholder: '请选择xxxxxx',
+    },
   },
 ];
 

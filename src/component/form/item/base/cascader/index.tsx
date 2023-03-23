@@ -1,28 +1,26 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Select } from 'antd';
-import type { SelectProps } from 'antd';
+import { Cascader } from 'antd';
+import type { CascaderProps } from 'antd';
 
-interface CustomeSelectProps extends SelectProps {
+type CustomeCascaderProps = CascaderProps & {
   fetch?: (params?: object) => Promise<any>;
   fetchParams?: object;
   responseHandler?: (res: any) => any;
-}
+};
 
-const Comp = ({ options, fetch, fetchParams, responseHandler = (res: any) => res, ...other }: CustomeSelectProps) => {
+const Comp = ({ options, fetch, fetchParams, responseHandler = (res: any) => res, ...other }: CustomeCascaderProps) => {
   const [ops, setOps] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
 
   const getOptions = useCallback(async () => {
     try {
-      setLoading(true);
       if (fetch) {
-        const res = await fetch({ ...fetchParams });
-        setOps(responseHandler(res));
+        const res = responseHandler(await fetch({ ...fetchParams }));
+        setOps(res);
       } else {
         setOps(options || []);
       }
     } finally {
-      setLoading(false);
+      /* empty */
     }
   }, [fetch, fetchParams, options, responseHandler]);
 
@@ -30,7 +28,7 @@ const Comp = ({ options, fetch, fetchParams, responseHandler = (res: any) => res
     getOptions();
   }, [getOptions]);
 
-  return <Select loading={loading} {...other} options={ops} />;
+  return <Cascader options={ops} {...other} />;
 };
 
 export default Comp;
