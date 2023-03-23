@@ -6,11 +6,7 @@ import type { TableProps } from 'antd';
 export const TableColumn: React.FC<any> = ({ children, ...params }: any) => {
   return (children ? children(params) : null) ?? '-';
 };
-/**
- * 定制table样式
- * border : 有边框
- * sticky : 设置粘性头部和滚动条
- */
+
 const Comp = ({ columns, children, ...other }: TableProps<any>) => {
   const cols = useMemo(() => {
     const childMap: any = {};
@@ -40,7 +36,7 @@ const Comp = ({ columns, children, ...other }: TableProps<any>) => {
     });
   }, [children, columns]);
 
-  return <Table bordered sticky {...other} columns={cols} />;
+  return <Table {...other} columns={cols} />;
 };
 
 export default Comp;
