@@ -11,6 +11,7 @@ import Switch from './base/switch';
 import TextArea from './base/textarea';
 import TimePicker from './base/timepicker';
 import TimeRangePicker from './base/timerangepicker';
+import Upload from './base/upload';
 import PriceUnit from './custom/price-unit';
 
 export default {
@@ -27,6 +28,7 @@ export default {
   timepicker: TimePicker,
   timerangepicker: TimeRangePicker,
   cascader: Cascader,
+  upload: Upload,
   // 自定义组件
   priceUnit: PriceUnit, // object
 };

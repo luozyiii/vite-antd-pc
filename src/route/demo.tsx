@@ -11,6 +11,7 @@ const DateTimeForm = lazy(() => import('@/page/demo/form/datetime'));
 const LinkageForm = lazy(() => import('@/page/demo/form/linkage'));
 const CustomForm = lazy(() => import('@/page/demo/form/custom'));
 const FilterForm = lazy(() => import('@/page/demo/form/filter'));
+const UploadForm = lazy(() => import('@/page/demo/form/upload'));
 
 // 项目
 const StorePage = lazy(() => import('@/page/demo/project/store'));
@@ -39,6 +40,7 @@ export default {
         { path: 'linkage', title: '表单联动', element: withLoadingComponent(<LinkageForm />) },
         { path: 'custom', title: '自定义表单', element: withLoadingComponent(<CustomForm />) },
         { path: 'filter', title: '筛选表单', element: withLoadingComponent(<FilterForm />) },
+        { path: 'upload', title: '表单上传', element: withLoadingComponent(<UploadForm />) },
       ],
     },
     {
