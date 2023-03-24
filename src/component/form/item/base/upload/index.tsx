@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Upload } from 'antd';
-import { uniqueId } from 'lodash-es';
 import DraggableUploadListItem from './DraggableUploadListItem';
 import styles from './index.module.scss';
 import type { DragEndEvent } from '@dnd-kit/core';
@@ -14,75 +13,70 @@ type CustomeUploadProps = UploadProps & {
   onChange?: (value: UploadFile[]) => void;
 };
 
-const Comp = ({ maxCount = 1, value = [], onChange, ...other }: CustomeUploadProps) => {
+const Comp = ({ maxCount = 1, value: fileList = [], onChange, ...other }: CustomeUploadProps) => {
   const [loading, setLoading] = useState(false);
-
-  // status: done | uploading | error
-  // percent 进度 50
-  const [fileList, setFileList] = useState<UploadFile[]>([
-    // {
-    //   uid: '-1',
-    //   name: 'image.png',
-    //   status: 'done',
-    //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    // },
-  ]);
 
   const sensor = useSensor(PointerSensor, {
     activationConstraint: { distance: 10 },
   });
 
-  const onDragEnd = ({ active, over }: DragEndEvent) => {
-    if (active.id !== over?.id) {
-      setFileList((prev) => {
-        const activeIndex = prev.findIndex((i) => i.uid === active.id);
-        const overIndex = prev.findIndex((i) => i.uid === over?.id);
-        return arrayMove(prev, activeIndex, overIndex);
-      });
-    }
-  };
-
-  const handleOnChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-  };
-
-  useEffect(() => {
-    if (fileList?.length === 0 && value?.length > 0) {
-      const newValue: any = [];
-      const len = maxCount < value?.length ? maxCount : value?.length;
-      for (let i = 0; i < len; i++) {
-        const ele = value[i];
-        newValue.push({
-          uid: uniqueId(),
-          name: 'image.png',
-          status: 'done',
-          url: ele.url,
-        });
+  const onDragEnd = useCallback(
+    ({ active, over }: DragEndEvent) => {
+      if (active.id !== over?.id) {
+        const activeIndex = fileList?.findIndex((i) => i.uid === active.id);
+        const overIndex = fileList?.findIndex((i) => i.uid === over?.id);
+        const newValue = arrayMove(fileList, activeIndex, overIndex);
+        onChange?.(newValue);
       }
-      setFileList(newValue);
-    }
-  }, [value]);
+    },
+    [fileList, onChange],
+  );
 
-  useEffect(() => {
-    onChange?.(fileList);
-  }, [fileList, onChange]);
+  const handleOnChange: UploadProps['onChange'] = useCallback(
+    ({ fileList: newFileList }: any) => {
+      newFileList = newFileList.slice(0);
+      newFileList = newFileList.map((file: UploadFile) => {
+        if (file.response) {
+          file.url = file.response.url;
+        }
+        return file;
+      });
+      onChange?.(newFileList);
+    },
+    [onChange],
+  );
+
+  const customRequest = useCallback(({ file, onSuccess }: any) => {
+    setLoading(true);
+    // const uri = '/third-party/v1/api/file/file-upload';
+    const data = new FormData();
+    data.append('type', 'PRIVATELY');
+    data.append('file', file);
+    data.append('fileName', file?.name);
+
+    setTimeout(() => {
+      onSuccess({ url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png' });
+      setLoading(false);
+    }, 2000);
+  }, []);
 
   return (
     <DndContext sensors={[sensor]} onDragEnd={onDragEnd}>
-      <SortableContext items={fileList.map((i) => i.uid)} strategy={verticalListSortingStrategy}>
+      <SortableContext items={fileList?.map((i) => i.uid)} strategy={verticalListSortingStrategy}>
         <Upload
-          className={styles.uploadBox}
           {...other}
+          className={styles.uploadBox}
           maxCount={maxCount}
           listType="picture-card"
           fileList={fileList}
           onChange={handleOnChange}
+          customRequest={customRequest}
           itemRender={(originNode, file) => <DraggableUploadListItem originNode={originNode} file={file} />}
         >
           {fileList.length >= maxCount ? null : (
             <div>
               {loading ? <LoadingOutlined /> : <PlusOutlined />}
-              <div style={{ marginTop: 8 }}>上传{fileList.length}</div>
+              <div style={{ marginTop: 8 }}>上传</div>
             </div>
           )}
         </Upload>

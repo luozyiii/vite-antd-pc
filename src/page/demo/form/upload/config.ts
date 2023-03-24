@@ -5,6 +5,7 @@ const fields: any[] = [
     name: 'upload',
     cProps: {
       maxCount: 8,
+      multiple: true,
     },
   },
 ];
