@@ -4,9 +4,20 @@ const fields: any[] = [
     label: '上传',
     name: 'upload',
     cProps: {
-      maxCount: 8,
+      maxCount: 2,
       multiple: true,
     },
+    rules: [
+      {
+        required: true,
+        validator: (_: any, value: any[]) => {
+          if (value.length > 0) {
+            return Promise.resolve();
+          }
+          return Promise.reject(new Error('请上传图片!'));
+        },
+      },
+    ],
   },
 ];
 

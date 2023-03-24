@@ -68,7 +68,7 @@ const Comp = ({ maxCount = 1, value: fileList = [], onChange, ...other }: Custom
           className={styles.uploadBox}
           maxCount={maxCount}
           listType="picture-card"
-          fileList={fileList}
+          fileList={fileList.slice(0, maxCount)}
           onChange={handleOnChange}
           customRequest={customRequest}
           itemRender={(originNode, file) => <DraggableUploadListItem originNode={originNode} file={file} />}
