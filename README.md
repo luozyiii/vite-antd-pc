@@ -228,9 +228,9 @@ hook/useTable
 
 ### axios 二次封装
 
-#### 需求点
+util/fetch.ts
 
-- 1、统一管理/拦截 api
-- 2、
+- 示例
+  page/demo/project/fetch
 
 ### thank you

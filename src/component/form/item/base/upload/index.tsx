@@ -3,6 +3,7 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Upload } from 'antd';
+import api from '@/api';
 import DraggableUploadListItem from './DraggableUploadListItem';
 import styles from './index.module.scss';
 import type { DragEndEvent } from '@dnd-kit/core';
@@ -46,18 +47,15 @@ const Comp = ({ maxCount = 1, value: fileList = [], onChange, ...other }: Custom
     [onChange],
   );
 
-  const customRequest = useCallback(({ file, onSuccess }: any) => {
+  const customRequest = useCallback(async ({ file, onSuccess }: any) => {
     setLoading(true);
-    // const uri = '/third-party/v1/api/file/file-upload';
     const data = new FormData();
     data.append('type', 'PRIVATELY');
     data.append('file', file);
     data.append('fileName', file?.name);
-
-    setTimeout(() => {
-      onSuccess({ url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png' });
-      setLoading(false);
-    }, 2000);
+    const res = await api.common.upload(data);
+    onSuccess(res.data?.data);
+    setLoading(false);
   }, []);
 
   return (

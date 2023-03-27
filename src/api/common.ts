@@ -1,8 +1,12 @@
-import fetch, { fetchDown } from '@/util/fetch';
+import fetch, { fetchBlob } from '@/util/fetch';
+import { baseURL } from './config';
 
 export default {
-  testapi: fetch('/aaaaaa', 'get', {
+  upload: fetch(baseURL + '/upload', 'post'),
+  export: fetchBlob(baseURL + '/export', 'post'),
+  import: fetchBlob(baseURL + '/import', 'post'),
+  testapi: fetch(baseURL + '/test', 'get', {
     ignoreToken: true,
+    ignoreMsg: true,
   }),
-  blobapi: fetchDown('/aaaaaa', 'get'),
 };

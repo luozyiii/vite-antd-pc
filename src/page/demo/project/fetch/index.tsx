@@ -1,19 +1,35 @@
 import { useCallback } from 'react';
-import { Button, Card } from 'antd';
+import { Space, Button, Card } from 'antd';
 import api from '@/api';
 import { PageContent } from '@/component';
+import { BatchImport } from '@/component/business';
+import { downloadBlob } from '@/util';
 
 const StoreForm: React.FC = () => {
   const handleFetch = useCallback(async () => {
-    const res = await api.common.blobapi({
+    const res = await api.common.testapi({
       hi: 111,
     });
     console.log('res', res);
   }, []);
+  const handleExport = useCallback(async () => {
+    const res = await api.common.export();
+    downloadBlob(res.data, 'xxx.xlsx');
+  }, []);
+
+  const handleOnUpdate = useCallback(() => {
+    console.log('onUpdate');
+  }, []);
   return (
     <PageContent title="请求示例">
       <Card>
-        <Button onClick={handleFetch}>简单请求</Button>
+        <Space>
+          <Button onClick={handleFetch}>简单请求</Button>
+          <BatchImport fetch={api.common.import} onUpdate={handleOnUpdate}>
+            批量导入
+          </BatchImport>
+          <Button onClick={handleExport}>导出</Button>
+        </Space>
       </Card>
     </PageContent>
   );

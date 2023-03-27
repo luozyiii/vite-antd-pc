@@ -4,7 +4,7 @@ import type { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 
 interface FetchOptions extends AxiosRequestConfig {
   ignoreToken?: boolean | undefined; // 忽略 token 的添加
-  ignoreMsg?: boolean | undefined; // 忽略错误信息提示
+  ignoreMsg?: boolean | undefined; // 忽略信息提示
 }
 
 const requestInterceptorsSuccess = (config: FetchOptions) => {
@@ -40,16 +40,12 @@ const responseInterceptorsSuccess = (response: AxiosResponse) => {
     data: { code, desc },
     config: { ignoreMsg, responseType },
   } = response;
-  if (responseType === 'blob') {
-    const reader = new FileReader();
-    reader.readAsText(response.data);
-  } else {
+  if (responseType !== 'blob') {
     if (code !== 2000 && !ignoreMsg) {
       const _desc = desc || '未知错误';
       message.error(_desc);
     }
   }
-
   return response;
 };
 
@@ -60,16 +56,14 @@ const responseInterceptorsError = (error: any) => {
 };
 
 // 普通请求 start
-const instance = axios.create({
-  baseURL: '/api', // 抽出去api层?
-});
+const instance = axios.create();
 // 请求前拦截
 instance.interceptors.request.use(requestInterceptorsSuccess, requestInterceptorsError);
 // 响应数据拦截
 instance.interceptors.response.use(responseInterceptorsSuccess, responseInterceptorsError);
 
 const fetch = (url: string, method: Method = 'get', config?: FetchOptions) => {
-  return (fetchData: object) => {
+  return (fetchData?: object | undefined) => {
     const options = {
       url,
       method,
@@ -85,7 +79,6 @@ const fetch = (url: string, method: Method = 'get', config?: FetchOptions) => {
 
 // 文件下载
 const fetchBlobInstance = axios.create({
-  baseURL: '/api',
   responseType: 'blob',
 });
 
@@ -94,8 +87,8 @@ fetchBlobInstance.interceptors.request.use(requestInterceptorsSuccess, requestIn
 // 响应数据拦截
 fetchBlobInstance.interceptors.response.use(responseInterceptorsSuccess, responseInterceptorsError);
 
-export const fetchDown = (url: string, method: Method = 'get', config?: FetchOptions) => {
-  return (fetchData: object) => {
+export const fetchBlob = (url: string, method: Method = 'get', config?: FetchOptions) => {
+  return (fetchData?: object | undefined) => {
     const options = {
       url,
       method,
