@@ -5,6 +5,7 @@ import { Form } from '@/component';
 import type { FormRef } from '@/component/form/form';
 import fields from './config';
 
+// upload组件也是自定义组件
 const UploadForm: React.FC = () => {
   const [preStr, setPreStr] = useState('');
   const formRef = useRef<FormRef>();
@@ -42,13 +43,13 @@ const UploadForm: React.FC = () => {
   return (
     <PageContent>
       <Card>
+        <p>upload组件也是自定义组件</p>
         <Form
           ref={formRef}
           fields={fields}
           initialValues={{
             upload: [],
           }}
-          requiredMark={false}
         />
         <pre>{preStr}</pre>
         <Space>
