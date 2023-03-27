@@ -3,7 +3,7 @@ import { PageContent } from '@/component';
 import BearCom from './component/bear';
 import HelloWorld from './component/hello-world';
 
-const StoreForm: React.FC = () => {
+const StoreDemo = () => {
   return (
     <PageContent>
       <Card>
@@ -15,4 +15,4 @@ const StoreForm: React.FC = () => {
   );
 };
 
-export default StoreForm;
+export default StoreDemo;

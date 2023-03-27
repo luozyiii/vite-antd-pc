@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
 import { Upload, Button, message } from 'antd';
+import type { UploadProps } from 'antd';
 
-interface ComponentProps {
+interface ComponentProps extends UploadProps {
   fetch: (params: object) => Promise<any>;
   name?: string; // 上传文件的字段名，默认file
   onUpdate?: () => void;
-  children?: React.ReactNode;
 }
 
-const Component = ({ fetch, name = 'file', onUpdate, children }: ComponentProps) => {
+const Component = ({ fetch, name = 'file', onUpdate, children, ...other }: ComponentProps) => {
   const handleImport = useCallback(
     async ({ file }: any) => {
       const data = new FormData();
@@ -32,7 +32,7 @@ const Component = ({ fetch, name = 'file', onUpdate, children }: ComponentProps)
   );
 
   return (
-    <Upload customRequest={handleImport} showUploadList={false}>
+    <Upload customRequest={handleImport} showUploadList={false} {...other}>
       <Button>{children || '导入'}</Button>
     </Upload>
   );

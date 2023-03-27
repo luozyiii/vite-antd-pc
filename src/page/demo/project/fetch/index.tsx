@@ -5,7 +5,7 @@ import { PageContent } from '@/component';
 import { BatchImport } from '@/component/business';
 import { downloadBlob } from '@/util';
 
-const StoreForm: React.FC = () => {
+const FetchDemo: React.FC = () => {
   const handleFetch = useCallback(async () => {
     const res = await api.common.testapi({
       hi: 111,
@@ -25,7 +25,7 @@ const StoreForm: React.FC = () => {
       <Card>
         <Space>
           <Button onClick={handleFetch}>简单请求</Button>
-          <BatchImport fetch={api.common.import} onUpdate={handleOnUpdate}>
+          <BatchImport accept=".xlsx" fetch={api.common.import} onUpdate={handleOnUpdate}>
             批量导入
           </BatchImport>
           <Button onClick={handleExport}>导出</Button>
@@ -35,4 +35,4 @@ const StoreForm: React.FC = () => {
   );
 };
 
-export default StoreForm;
+export default FetchDemo;
