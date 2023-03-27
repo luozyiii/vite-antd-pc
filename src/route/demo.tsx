@@ -15,6 +15,7 @@ const UploadForm = lazy(() => import('@/page/demo/form/upload'));
 
 // 项目
 const StorePage = lazy(() => import('@/page/demo/project/store'));
+const FetchPage = lazy(() => import('@/page/demo/project/fetch'));
 
 export default {
   type: 'group',
@@ -47,7 +48,10 @@ export default {
       path: 'project',
       title: '项目',
       icon: 'ProjectOutlined',
-      children: [{ path: 'store', title: '状态管理', element: withLoadingComponent(<StorePage />) }],
+      children: [
+        { path: 'store', title: '状态管理', element: withLoadingComponent(<StorePage />) },
+        { path: 'fetch', title: '请求示例', element: withLoadingComponent(<FetchPage />) },
+      ],
     },
   ],
 };

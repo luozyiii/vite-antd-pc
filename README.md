@@ -226,4 +226,11 @@ colType 属性
 
 hook/useTable
 
+### axios 二次封装
+
+#### 需求点
+
+- 1、统一管理/拦截 api
+- 2、
+
 ### thank you
