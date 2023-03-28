@@ -13,6 +13,7 @@ const fields: any[] = [
       // addonAfter: 'hi',
       // disabled: true,
     },
+    extra: '我是提示信息！',
   },
   {
     type: 'number',

@@ -13,6 +13,7 @@ const LinkageForm = lazy(() => import('@/page/demo/form/linkage'));
 const CustomForm = lazy(() => import('@/page/demo/form/custom'));
 const FilterForm = lazy(() => import('@/page/demo/form/filter'));
 const UploadForm = lazy(() => import('@/page/demo/form/upload'));
+const ModalFormPage = lazy(() => import('@/page/demo/form/modal'));
 
 // 项目
 const StorePage = lazy(() => import('@/page/demo/project/store'));
@@ -44,6 +45,7 @@ export default {
         { path: 'upload', title: '上传', element: withLoadingComponent(<UploadForm />) },
         { path: 'custom', title: '自定义表单', element: withLoadingComponent(<CustomForm />) },
         { path: 'filter', title: '筛选表单', element: withLoadingComponent(<FilterForm />) },
+        { path: 'modal', title: '弹窗表单', element: withLoadingComponent(<ModalFormPage />) },
       ],
     },
     {
