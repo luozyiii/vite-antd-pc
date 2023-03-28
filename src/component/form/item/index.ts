@@ -11,6 +11,7 @@ import Switch from './base/switch';
 import TextArea from './base/textarea';
 import TimePicker from './base/timepicker';
 import TimeRangePicker from './base/timerangepicker';
+import TreeSelect from './base/treeselect';
 import Upload from './base/upload';
 import PriceUnit from './custom/price-unit';
 
@@ -21,6 +22,7 @@ export default {
   textarea: TextArea,
   radio: Radio,
   select: Select,
+  treeselect: TreeSelect,
   checkbox: Checkbox,
   switch: Switch,
   datepicker: DatePicker,

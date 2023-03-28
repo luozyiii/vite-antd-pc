@@ -7,6 +7,7 @@ const DetailLayout = lazy(() => import('@/page/demo/layout/detail'));
 
 // 表单
 const BaseForm = lazy(() => import('@/page/demo/form/base'));
+const SelectForm = lazy(() => import('@/page/demo/form/select'));
 const DateTimeForm = lazy(() => import('@/page/demo/form/datetime'));
 const LinkageForm = lazy(() => import('@/page/demo/form/linkage'));
 const CustomForm = lazy(() => import('@/page/demo/form/custom'));
@@ -36,7 +37,8 @@ export default {
       title: '表单',
       icon: 'FormOutlined',
       children: [
-        { path: 'base', title: '基础表单', element: withLoadingComponent(<BaseForm />) },
+        { path: 'base', title: '基础', element: withLoadingComponent(<BaseForm />) },
+        { path: 'select', title: '选择器', element: withLoadingComponent(<SelectForm />) },
         { path: 'datetime', title: '日期时间', element: withLoadingComponent(<DateTimeForm />) },
         { path: 'linkage', title: '表单联动', element: withLoadingComponent(<LinkageForm />) },
         { path: 'custom', title: '自定义表单', element: withLoadingComponent(<CustomForm />) },
