@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { Button, Card, Space } from 'antd';
+import { Button, Card, Space, Alert } from 'antd';
 import { PageContent } from '@/component';
 import { Form } from '@/component';
 import type { FormRef } from '@/component/form/form';
@@ -43,7 +43,8 @@ const UploadForm: React.FC = () => {
   return (
     <PageContent>
       <Card>
-        <p>upload组件也是自定义组件</p>
+        <Alert message="Upload组件属于自定义表单" type="info" />
+        <br />
         <Form
           ref={formRef}
           fields={fields}

@@ -41,9 +41,9 @@ export default {
         { path: 'select', title: '选择器', element: withLoadingComponent(<SelectForm />) },
         { path: 'datetime', title: '日期时间', element: withLoadingComponent(<DateTimeForm />) },
         { path: 'linkage', title: '表单联动', element: withLoadingComponent(<LinkageForm />) },
+        { path: 'upload', title: '上传', element: withLoadingComponent(<UploadForm />) },
         { path: 'custom', title: '自定义表单', element: withLoadingComponent(<CustomForm />) },
         { path: 'filter', title: '筛选表单', element: withLoadingComponent(<FilterForm />) },
-        { path: 'upload', title: '表单上传', element: withLoadingComponent(<UploadForm />) },
       ],
     },
     {
