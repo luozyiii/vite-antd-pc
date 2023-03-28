@@ -10,6 +10,7 @@ interface CustomeRadioGroupProps extends RadioGroupProps {
   fieldNames?: { label: string; value: string };
 }
 
+// 实现重点： 数据源异步加载
 const Comp = ({
   options,
   direction = 'horizontal',

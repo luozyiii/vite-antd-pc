@@ -14,6 +14,7 @@ type CustomeRangePickerProps = Omit<TimeRangePickerProps, 'value' | 'onChange'> 
   onChange?: (value: valueProps) => void;
 };
 
+// 实现重点： value入参、出参的一致性
 const Comp = ({ value, onChange, format = 'HH:mm:ss', ...other }: CustomeRangePickerProps) => {
   const handleOnChange = useCallback(
     (dates: valueOriginalProps) => {

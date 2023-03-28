@@ -9,6 +9,7 @@ interface CustomeCheckboxGroupProps extends CheckboxGroupProps {
   fieldNames?: { label: string; value: string };
 }
 
+// 实现重点： 数据源异步加载
 const Comp = ({
   options,
   fetch,

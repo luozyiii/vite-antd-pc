@@ -14,6 +14,7 @@ type CustomeUploadProps = UploadProps & {
   onChange?: (value: UploadFile[]) => void;
 };
 
+// 自定义表单的一种实现
 const Comp = ({ maxCount = 1, value: fileList = [], onChange, ...other }: CustomeUploadProps) => {
   const [loading, setLoading] = useState(false);
 

@@ -8,6 +8,7 @@ interface CustomeSelectProps extends SelectProps {
   responseHandler?: (res: any) => any;
 }
 
+// 实现重点： 数据源异步加载
 const Comp = ({ options, fetch, fetchParams, responseHandler = (res: any) => res, ...other }: CustomeSelectProps) => {
   const [ops, setOps] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
