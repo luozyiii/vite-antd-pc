@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import { matchPath } from 'react-router-dom';
 import Loading from '@/component/loading';
 import { businessRoutes } from './index';
 
@@ -34,13 +35,11 @@ function getTitles(tree: any[]) {
 }
 
 const getRouteTitle = (pathname: string) => {
-  const paths = getAllPath(pathname).reverse();
   const titles = getTitles(businessRoutes);
   let title = '';
-  for (let i = 0; i < paths.length; i++) {
-    const path = paths[i];
-    if (titles[path]) {
-      title = titles[path];
+  for (const key in titles) {
+    if (matchPath(key, pathname)) {
+      title = titles[key];
       break;
     }
   }
