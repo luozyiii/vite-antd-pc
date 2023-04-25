@@ -3,6 +3,7 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { DownOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { Layout, Menu, Dropdown, Space, Button } from 'antd';
 import logoImg from '@/asset/vite.svg';
+import { ErrorBoundary } from '@/component';
 import { businessRoutes } from '@/route';
 import { getAllPath } from '@/route/util';
 import useUserInfoStore from '@/store/useUserInfo';
@@ -132,7 +133,9 @@ const AppLayout = () => {
           </div>
         </div>
         <Content className={styles.mainContent} id="mainContent">
-          <Outlet />
+          <ErrorBoundary>
+            <Outlet />
+          </ErrorBoundary>
         </Content>
       </Layout>
     </div>
