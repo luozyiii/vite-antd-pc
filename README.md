@@ -155,6 +155,65 @@ npm run serve
 
 参考 [quick-nginx](https://github.com/luozyiii/quick-nginx)
 
+### antd form 表单封装
+
+#### 基础表单
+
+- input
+- number
+- password
+- textarea
+- radio
+- select
+- checkbox
+- switch
+
+> checkbox select radio 的 options 支持异步获取
+
+#### 日期时间
+
+- datepicker
+- daterangepicker
+- timepicker
+- timerangepicker
+
+#### 上传
+
+- upload
+
+#### 自定义表单
+
+- priceUnit
+
+#### 表单联动
+
+/demo/form/linkage
+
+#### 筛选表单 FilterForm + PageTable
+
+> /demo/form/filter
+
+colType 属性
+
+| colType | default | large |
+| ------- | ------- | ----- |
+| xxl     | 4       | 8     |
+| xl      | 6       | 12    |
+| lg      | 8       | 16    |
+| md      | 12      | 24    |
+| xs      | 24      | 24    |
+
+#### useTable
+
+hook/useTable
+
+### axios 二次封装
+
+util/fetch.ts
+
+- 示例
+  page/demo/project/fetch
+
 ### 遇到问题？
 
 ##### Qa1: Cannot access '...' before initialization? es module 循环引用导致
@@ -229,64 +288,5 @@ export default ErrorBoundary;
 - 方法二：检测网页更新并通知用户刷新，支持 vite、umijs 和 webpack 插件。例如：plugin-web-update-notification
 
 > 我们使用 `react 错误边界`完全可以自己实现类似检测网页更新的功能。
-
-### antd form 表单封装
-
-#### 基础表单
-
-- input
-- number
-- password
-- textarea
-- radio
-- select
-- checkbox
-- switch
-
-> checkbox select radio 的 options 支持异步获取
-
-#### 日期时间
-
-- datepicker
-- daterangepicker
-- timepicker
-- timerangepicker
-
-#### 上传
-
-- upload
-
-#### 自定义表单
-
-- priceUnit
-
-#### 表单联动
-
-/demo/form/linkage
-
-#### 筛选表单 FilterForm + PageTable
-
-> /demo/form/filter
-
-colType 属性
-
-| colType | default | large |
-| ------- | ------- | ----- |
-| xxl     | 4       | 8     |
-| xl      | 6       | 12    |
-| lg      | 8       | 16    |
-| md      | 12      | 24    |
-| xs      | 24      | 24    |
-
-#### useTable
-
-hook/useTable
-
-### axios 二次封装
-
-util/fetch.ts
-
-- 示例
-  page/demo/project/fetch
 
 ### thank you
