@@ -50,6 +50,7 @@ npm run build
 ├── config                      # 项目配置
 │   └── proxy.ts                # 代理
 ├── public                      # 资源文件
+├── serve                       # node 服务
 ├── src                         # 源码目录
 │   ├── component               # 全局组件
 │   ├── page                    # 页面组件
@@ -143,9 +144,19 @@ const useUserInfoStore = create<UserInfoState>()(
 export default useUserInfoStore;
 ```
 
+### node 服务
+
+> 验证打包后的产物，模拟生产环境，`类 nginx` 的环境
+
+```bash
+npm run serve
+```
+
+参考 [quick-nginx](https://github.com/luozyiii/quick-nginx)
+
 ### 遇到问题？
 
-##### Qa: Cannot access '...' before initialization? es module 循环引用导致
+##### Qa1: Cannot access '...' before initialization? es module 循环引用导致
 
 ```ts
 // https://github.com/vitejs/vite/issues/3033
@@ -170,11 +181,53 @@ export default defineConfig({
 
 继续思考其他解决方案
 
-##### Qa: antd 样式在低版本浏览器无法识别
+##### Qa2: antd 样式在低版本浏览器无法识别
 
 Ant Design 支持最近 2 个版本的现代浏览器。如果你需要兼容旧版浏览器，请根据实际需求进行降级处理：[样式兼容](https://ant.design/docs/react/compatible-style-cn)
 
 [:where 兼容性](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:where#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E6%80%A7)
+
+##### Qa3: 部分用户（老板）没有关闭网页的习惯，在网页有新版本更新或问题修复时，用户继续使用旧的版本，影响用户体验和后端数据准确性。也有可能会出现报错（文件 404）、白屏的情况。
+
+- 方法一：引入 React 错误边界来解决该问题，通过友好的提醒，让用户刷新浏览器。
+
+```tsx
+// src/component/error-boundary
+import { ErrorBoundary as ErrorBoundaryComp } from 'react-error-boundary';
+import styles from './index.module.scss';
+
+function ErrorFallback({ error }: any) {
+  function goHome() {
+    location.href = '/';
+  }
+
+  return (
+    <div className={styles.ErrorBoundaryBox}>
+      <h1>Something went wrong: </h1>
+      <pre style={{ color: 'red' }}>{error.message}</pre>
+      <button onClick={() => location.reload()}>刷新试试</button>&nbsp;&nbsp;
+      <button onClick={goHome}>返回首页</button>
+    </div>
+  );
+}
+
+const ErrorBoundary: React.FC<any> = ({ children }) => {
+  return <ErrorBoundaryComp FallbackComponent={ErrorFallback}>{children}</ErrorBoundaryComp>;
+};
+
+export default ErrorBoundary;
+```
+
+```tsx
+// src/component/layout
+<ErrorBoundary>
+  <Outlet />
+</ErrorBoundary>
+```
+
+- 方法二：检测网页更新并通知用户刷新，支持 vite、umijs 和 webpack 插件。例如：plugin-web-update-notification
+
+> 我们使用 `react 错误边界`完全可以自己实现类似检测网页更新的功能。
 
 ### antd form 表单封装
 
