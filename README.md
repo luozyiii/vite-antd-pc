@@ -146,9 +146,10 @@ export default useUserInfoStore;
 
 ### node 服务
 
-> 验证打包后的产物，模拟生产环境，`类 nginx` 的环境
+> 快速验证打包后的产物，模拟生产环境，`类 nginx` 的环境
 
 ```bash
+# 执行该命令前请先构建项目 npm run build
 npm run serve
 ```
 
