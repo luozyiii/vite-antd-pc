@@ -9,6 +9,11 @@ vite 4 + react 18 + ts + react-router-dom v6 + zustand + antd 5
 npm run start
 # 构建
 npm run build
+
+# 快速验证打包后的产物，模拟生产环境，`类 nginx` 的环境
+# 执行该命令前请先构建项目 npm run build
+npm run serve
+# 或者 vite preview
 ```
 
 ### 整体架构
@@ -154,6 +159,20 @@ npm run serve
 ```
 
 参考 [quick-nginx](https://github.com/luozyiii/quick-nginx)
+
+- 备注：[vite preview ](https://cn.vitejs.dev/config/preview-options.html)支持这个功能
+
+```js
+// vite.config.ts
+preview: {
+  proxy: {
+    '/api': {
+      target: 'http:api.com',
+      changeOrigin: true,
+    },
+  }
+};
+```
 
 ### antd form 表单封装
 

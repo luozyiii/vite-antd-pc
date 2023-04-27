@@ -16,6 +16,9 @@ export default defineConfig(({ command }) => {
       port: 8000,
       proxy: proxyServer,
     },
+    preview: {
+      proxy: proxyServer,
+    },
     plugins: [
       react(),
       tsConfigPaths(),
