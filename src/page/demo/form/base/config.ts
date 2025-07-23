@@ -1,4 +1,6 @@
-const fields: any[] = [
+import type { FormFields } from '@/types/form';
+
+const fields: FormFields = [
   {
     type: 'input',
     label: '手机',
@@ -43,8 +45,8 @@ const fields: any[] = [
         required: true,
         message: '请确认您的密码!',
       },
-      ({ getFieldValue }: any) => ({
-        validator(_, value) {
+      ({ getFieldValue }: { getFieldValue: (name: string) => unknown }) => ({
+        validator(_: unknown, value: string) {
           if (!value || getFieldValue('pwd') === value) {
             return Promise.resolve();
           }

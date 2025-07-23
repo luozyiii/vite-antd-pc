@@ -10,7 +10,7 @@ const FetchDemo: React.FC = () => {
     const res = await api.common.testapi({
       hi: 111,
     });
-    console.log('res', res);
+    console.warn('API response:', res);
   }, []);
   const handleExport = useCallback(async () => {
     const res = await api.common.export();
@@ -18,7 +18,7 @@ const FetchDemo: React.FC = () => {
   }, []);
 
   const handleOnUpdate = useCallback(() => {
-    console.log('onUpdate');
+    console.warn('onUpdate triggered');
   }, []);
   return (
     <PageContent title="请求示例">

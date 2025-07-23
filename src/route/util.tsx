@@ -2,8 +2,10 @@ import { Suspense } from 'react';
 import { matchPath } from 'react-router-dom';
 import Loading from '@/component/loading';
 import { businessRoutes } from './index';
+import type { RouteItemProps } from './type';
+import type { ReactElement } from 'react';
 
-const withLoadingComponent = (comp: JSX.Element) => <Suspense fallback={<Loading />}>{comp}</Suspense>;
+const withLoadingComponent = (comp: ReactElement) => <Suspense fallback={<Loading />}>{comp}</Suspense>;
 
 const getAllPath = (pathname: string) => {
   const pathSnippets = pathname.split('/').filter((i: string) => i);
@@ -13,20 +15,20 @@ const getAllPath = (pathname: string) => {
   });
 };
 
-function getTitles(tree: any[]) {
-  const res: any = {};
-  function dfs(tree: any[], par?: []) {
+function getTitles(tree: RouteItemProps[]) {
+  const res: Record<string, string> = {};
+  function dfs(tree: RouteItemProps[], par?: string[]): void {
     if (!tree || tree.length === 0) {
-      return res;
+      return;
     }
     for (let i = 0; i < tree.length; i++) {
       const t = tree[i];
-      t.par = par ? [...par, t.path] : [t.path];
+      const currentPar = par && t.path ? [...par, t.path] : t.path ? [t.path] : [];
       if (t.children && t.children.length > 0) {
-        dfs(t.children, t.par);
+        dfs(t.children, currentPar);
       }
-      if (t.path) {
-        res[`/${t.par.join('/')}`] = t.title;
+      if (t.path && t.title) {
+        res[`/${currentPar.join('/')}`] = t.title;
       }
     }
   }

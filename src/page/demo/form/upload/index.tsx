@@ -1,14 +1,13 @@
 import { useCallback, useRef, useState } from 'react';
 import { Button, Card, Space, Alert } from 'antd';
-import { PageContent } from '@/component';
-import { Form } from '@/component';
-import type { FormRef } from '@/component/form/form';
+import { PageContent, Form } from '@/component';
 import fields from './config';
+import type { FormRef } from '@/component/form/form';
 
 // upload组件也是自定义组件
 const UploadForm: React.FC = () => {
   const [preStr, setPreStr] = useState('');
-  const formRef = useRef<FormRef>();
+  const formRef = useRef<FormRef>(null);
 
   const handleSubmit = useCallback(async () => {
     await formRef?.current?.validateFields();

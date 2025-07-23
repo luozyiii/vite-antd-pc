@@ -1,7 +1,12 @@
 import { ErrorBoundary as ErrorBoundaryComp } from 'react-error-boundary';
 import styles from './index.module.scss';
+import type { ReactNode } from 'react';
 
-function ErrorFallback({ error }: any) {
+interface ErrorFallbackProps {
+  error: Error;
+}
+
+function ErrorFallback({ error }: ErrorFallbackProps) {
   function goHome() {
     location.href = '/';
   }
@@ -16,7 +21,11 @@ function ErrorFallback({ error }: any) {
   );
 }
 
-const ErrorBoundary: React.FC<any> = ({ children }) => {
+interface ErrorBoundaryProps {
+  children: ReactNode;
+}
+
+const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({ children }) => {
   return <ErrorBoundaryComp FallbackComponent={ErrorFallback}>{children}</ErrorBoundaryComp>;
 };
 

@@ -1,11 +1,13 @@
-const checkPrice = (_: any, value: { number: number }) => {
+const checkPrice = (_: unknown, value: { number: number }) => {
   if (value.number > 0) {
     return Promise.resolve();
   }
   return Promise.reject(new Error('至少大于零!'));
 };
 
-const fields: any[] = [
+import type { FormFields } from '@/types/form';
+
+const fields: FormFields = [
   {
     type: 'priceUnit',
     label: '价格',

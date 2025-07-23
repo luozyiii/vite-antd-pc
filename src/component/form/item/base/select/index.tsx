@@ -1,16 +1,29 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Select } from 'antd';
-import type { SelectProps } from 'antd';
+import type { SelectProps, DefaultOptionType } from 'antd/es/select';
+
+interface ApiResponse {
+  data?: DefaultOptionType[];
+  success?: boolean;
+  message?: string;
+  [key: string]: unknown;
+}
 
 interface CustomeSelectProps extends SelectProps {
-  fetch?: (params?: object) => Promise<any>;
+  fetch?: (params?: object) => Promise<ApiResponse>;
   fetchParams?: object;
-  responseHandler?: (res: any) => any;
+  responseHandler?: (res: ApiResponse) => DefaultOptionType[];
 }
 
 // 实现重点： 数据源异步加载
-const Comp = ({ options, fetch, fetchParams, responseHandler = (res: any) => res, ...other }: CustomeSelectProps) => {
-  const [ops, setOps] = useState<any[]>([]);
+const Comp = ({
+  options,
+  fetch,
+  fetchParams,
+  responseHandler = (res: ApiResponse) => res.data || [],
+  ...other
+}: CustomeSelectProps) => {
+  const [ops, setOps] = useState<DefaultOptionType[]>([]);
   const [loading, setLoading] = useState(false);
 
   const getOptions = useCallback(async () => {

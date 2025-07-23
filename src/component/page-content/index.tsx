@@ -1,8 +1,9 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LeftOutlined } from '@ant-design/icons';
 import { Layout } from 'antd';
+import { LeftOutlined } from '@ant-design/icons';
 import { getRouteTitle } from '@/route/util';
 import styles from './index.module.scss';
+
 const { Content } = Layout;
 
 interface PageContentProps {

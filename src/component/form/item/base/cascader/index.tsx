@@ -1,15 +1,29 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Cascader } from 'antd';
-import type { CascaderProps } from 'antd';
+import type { CascaderProps, DefaultOptionType } from 'antd/es/cascader';
 
-type CustomeCascaderProps = CascaderProps & {
-  fetch?: (params?: object) => Promise<any>;
+interface ApiResponse {
+  data?: DefaultOptionType[];
+  success?: boolean;
+  message?: string;
+  [key: string]: unknown;
+}
+
+type CustomeCascaderProps = Omit<CascaderProps<DefaultOptionType>, 'options'> & {
+  options?: DefaultOptionType[];
+  fetch?: (params?: object) => Promise<ApiResponse>;
   fetchParams?: object;
-  responseHandler?: (res: any) => any;
+  responseHandler?: (res: ApiResponse) => DefaultOptionType[];
 };
 
-const Comp = ({ options, fetch, fetchParams, responseHandler = (res: any) => res, ...other }: CustomeCascaderProps) => {
-  const [ops, setOps] = useState<any[]>([]);
+const Comp = ({
+  options,
+  fetch,
+  fetchParams,
+  responseHandler = (res: ApiResponse) => res.data || [],
+  ...other
+}: CustomeCascaderProps) => {
+  const [ops, setOps] = useState<DefaultOptionType[]>([]);
 
   const getOptions = useCallback(async () => {
     try {
@@ -28,7 +42,7 @@ const Comp = ({ options, fetch, fetchParams, responseHandler = (res: any) => res
     getOptions();
   }, [getOptions]);
 
-  return <Cascader options={ops} {...other} />;
+  return <Cascader options={ops} {...(other as Record<string, unknown>)} />;
 };
 
 export default Comp;

@@ -13,9 +13,10 @@ import {
   ProjectOutlined,
 } from '@ant-design/icons';
 import { IconHome } from '@/component/icons';
+import type { ComponentType } from 'react';
 
 // 菜单 icons 配置
-export const icons: any = {
+export const icons: Record<string, ComponentType> = {
   UserOutlined: UserOutlined,
   NotificationOutlined: NotificationOutlined,
   LaptopOutlined: LaptopOutlined,

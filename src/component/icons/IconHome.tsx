@@ -1,4 +1,6 @@
-const Component = (props: any) => (
+import type { SVGProps } from 'react';
+
+const Component = (props: SVGProps<SVGSVGElement>) => (
   <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <rect width="16" height="16" fill="node" />
     <g clipPath="url(#clip0_11783_1332)">

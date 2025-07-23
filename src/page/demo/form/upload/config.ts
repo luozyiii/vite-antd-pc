@@ -1,4 +1,6 @@
-const fields: any[] = [
+import type { FormFields } from '@/types/form';
+
+const fields: FormFields = [
   {
     type: 'upload',
     label: '上传',
@@ -10,7 +12,7 @@ const fields: any[] = [
     rules: [
       {
         required: true,
-        validator: (_: any, value: any[]) => {
+        validator: (_: unknown, value: Array<{ uid: string; name: string; status?: string; url?: string }>) => {
           if (value.length > 0) {
             return Promise.resolve();
           }

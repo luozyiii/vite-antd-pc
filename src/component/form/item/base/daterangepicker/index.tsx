@@ -1,8 +1,9 @@
 import { useCallback, useMemo } from 'react';
-import { DatePicker } from 'antd';
 import dayjs from 'dayjs';
+import { DatePicker } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import type { Dayjs } from 'dayjs';
+
 const { RangePicker } = DatePicker;
 
 type valueOriginalProps = [Dayjs | null, Dayjs | null] | null;
@@ -29,11 +30,10 @@ const Comp = ({ value, onChange, format = 'YYYY-MM-DD HH:mm:ss', ...other }: Cus
   );
 
   const _v: valueOriginalProps = useMemo(() => {
-    return value && value.length
-      ? value.map((v) => {
-          return v ? dayjs(v) : null;
-        })
-      : null;
+    if (value && value.length >= 2) {
+      return [value[0] ? dayjs(value[0]) : null, value[1] ? dayjs(value[1]) : null];
+    }
+    return null;
   }, [value]);
 
   return <RangePicker {...other} value={_v} onChange={handleOnChange} />;

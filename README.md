@@ -1,311 +1,196 @@
-# vite-antd-pc
+# Vite + React + TypeScript + Ant Design 管理后台
 
-vite 4 + react 18 + ts + react-router-dom v6 + zustand + antd 5
+> 🚀 基于现代前端技术栈构建的企业级管理后台模板
 
-### 常用命令
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19.0-blue.svg)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-6.0-646CFF.svg)](https://vitejs.dev/)
+[![Ant Design](https://img.shields.io/badge/Ant%20Design-5.0-1890FF.svg)](https://ant.design/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
-```bash
-# 开发
-npm run start
-# 构建
-npm run build
+## ✨ 特性
 
-# 快速验证打包后的产物，模拟生产环境，`类 nginx` 的环境
-# 执行该命令前请先构建项目 npm run build
-npm run serve
-# 或者 vite preview
-```
+- 🚀 **现代技术栈** - Vite 6 + React 19 + TypeScript 5 + Ant Design 5
+- 📦 **轻量状态管理** - Zustand 状态管理，支持持久化
+- 🛣️ **完整路由系统** - React Router v7，支持权限控制
+- 🎨 **企业级 UI** - Ant Design 5，60+ 高质量组件
+- 📱 **响应式设计** - 支持多种屏幕尺寸自适应
+- 🔧 **开发工具链** - ESLint + Prettier + Husky 代码质量保障
+- 📋 **动态表单系统** - 基于配置的表单生成，支持联动和验证
+- 📊 **数据表格** - 功能完整的表格组件，支持分页、筛选、排序
+- 🌐 **网络请求** - Axios 封装，统一错误处理和拦截器
+- 🎯 **TypeScript** - 完整类型定义，更好的开发体验
+- 🐳 **容器化支持** - Docker 配置，支持容器化部署
+- 🔄 **CI/CD** - GitHub Actions 自动化工作流
 
-### 整体架构
+## 🚀 快速开始
 
-#### 基础
+### 环境要求
 
-###### [前端开发与构建工具 vite](https://cn.vitejs.dev/guide/)
+- Node.js >= 18.0.0
+- npm >= 9.0.0
 
-###### [vite 支持 react](https://www.npmjs.com/package/@vitejs/plugin-react)
-
-###### [用于构建用户界面的 JavaScript 库 React](https://react.docschina.org/)
-
-###### [类型系统 typescript](https://www.typescriptlang.org/)
-
-###### [路由 react-router](https://reactrouter.com/en/main)
-
-###### [react-router-dom](https://www.npmjs.com/package/react-router-dom)
-
-###### [组件库 antd](https://ant.design/index-cn)
-
-#### 工具库
-
-###### [基于 promise 的网络请求库 axios](https://www.axios-http.cn/)
-
-###### [实用工具集 loadsh-es](https://www.lodashjs.com/)
-
-###### [React hook 状态管理 zustand](https://github.com/pmndrs/zustand)
-
-###### [日期处理 date-fns](https://www.npmjs.com/package/date-fns)
-
-> 备注：使用 dayjs, 与 antd 保持一致，纯了解 date-fns。
-
-#### [编码规范](https://github.com/luozyiii/code-guide)
-
-#### 目录
+### 安装和启动
 
 ```bash
-├── .vscode                     # 该项目 vscode 配置
-├── config                      # 项目配置
-│   └── proxy.ts                # 代理
-├── public                      # 资源文件
-├── serve                       # node 服务
-├── src                         # 源码目录
-│   ├── component               # 全局组件
-│   ├── page                    # 页面组件
-│   ├── route                   # 路由配置
-│   ├── store                   # zustand：react hook 状态管理
-│   ├── style                   # 样式自定义
-│   ├── util                    # 工具库
-│   │   └── index.ts            # 工具方法
-│   ├── app.tsx                 # 主组件
-│   ├── index.css               # 全局样式
-│   ├── main.tsx                # 主入口
-│   └── vite-env.d.ts
-├── .commitlintrc.js            # git commit 规范配置
-├── .eslintrc.js                # eslint 配置
-├── .gitignore                  # git忽略文件
-├── .prettierrc.js              # prettier 配置
-├── index.html                  # html模版
-├── package.json
-├── README.md                   # 文档说明
-├── tsconfig.json               # ts 配置
-└── tsconfig.node.json          # ts node 配置
+# 克隆项目
+git clone <repository-url>
+cd vite-antd-pc
 
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
+
+# 浏览器访问 http://localhost:8000
 ```
 
-### zustand：react hook 状态管理
+### 可用脚本
 
-```ts
-// 根目录store
-// eg1: 简单使用 useBear.ts
-import { create } from '@/store';
+```bash
+npm run dev          # 启动开发服务器
+npm run build        # 构建生产版本
+npm run preview      # 预览构建结果
+npm run lint         # 代码检查
+npm run lint:fix     # 自动修复代码问题
+npm run type-check   # TypeScript 类型检查
+npm run format       # 代码格式化
+```
 
-interface BearState {
-  bear: number;
-  increase: () => void;
-  reduce: () => void;
-}
+## 📁 项目结构
 
-const useBearStore = create<BearState>()((set) => ({
-  bear: 0,
-  increase: () => set((state) => ({ bear: state.bear + 1 })),
-  reduce: () => set((state) => ({ bear: state.bear - 1 })),
+```
+vite-antd-pc/
+├── docs/                      # 📚 项目文档
+├── src/
+│   ├── api/                   # 🌐 API 接口层
+│   ├── component/             # 🧩 组件库
+│   │   ├── business/          # 业务组件
+│   │   ├── form/              # 表单组件系统
+│   │   ├── layout/            # 布局组件
+│   │   └── table/             # 表格组件
+│   ├── hook/                  # 🎣 自定义 Hooks
+│   ├── page/                  # 📄 页面组件
+│   ├── route/                 # 🛣️ 路由配置
+│   ├── store/                 # 🗂️ 状态管理
+│   ├── style/                 # 🎨 样式文件
+│   ├── types/                 # 📝 类型定义
+│   └── utils/                 # 🔧 工具函数
+├── .vscode/                   # VSCode 配置
+├── .github/                   # GitHub Actions
+└── docker/                    # Docker 配置
+```
+
+## 🎨 核心功能
+
+### 动态表单系统
+
+```typescript
+import { Form } from '@/component';
+
+const fields = [
+  {
+    type: 'input',
+    label: '用户名',
+    name: 'username',
+    rules: [{ required: true }],
+  },
+  {
+    type: 'select',
+    label: '角色',
+    name: 'role',
+    cProps: { fetch: getRoleOptions },
+  },
+];
+
+<Form fields={fields} onFinish={handleSubmit} />
+```
+
+### 数据表格
+
+```typescript
+import { PageTable } from '@/component';
+
+<PageTable
+  fetch={getUserList}
+  columns={columns}
+  searchFields={searchFields}
+/>
+```
+
+### 状态管理
+
+```typescript
+import { create } from 'zustand';
+
+const useStore = create((set) => ({
+  count: 0,
+  increment: () => set((state) => ({ count: state.count + 1 })),
 }));
-
-export default useBearStore;
-
-// eg2: 持久化用户信息
-import { create, persist, createJSONStorage } from '@/store';
-
-interface UserInfoProps {
-  name: string;
-  phone: string | number;
-}
-
-interface UserInfoState {
-  isLogin: boolean;
-  token: string;
-  userInfo: UserInfoProps | null;
-  setUserInfo: (value: UserInfoProps) => void;
-  setToken: (token: string) => void;
-  reset: () => void;
-}
-/**
- * 登录信息
- * token信息
- * 用户信息
- * 持久化storage
- */
-const useUserInfoStore = create<UserInfoState>()(
-  persist(
-    (set) => ({
-      isLogin: false,
-      token: '',
-      userInfo: null,
-      setUserInfo: (userInfo: UserInfoProps) => {
-        set(() => ({ userInfo, isLogin: true }));
-      },
-      setToken: (token: string) => {
-        set(() => ({ token }));
-      },
-      reset: () => {
-        set(() => ({ userInfo: null, isLogin: false, token: '' }));
-      },
-    }),
-    {
-      name: 'USER_INFO',
-      storage: createJSONStorage(() => localStorage),
-    },
-  ),
-);
-
-export default useUserInfoStore;
 ```
 
-### node 服务
+## 📖 文档
 
-> 快速验证打包后的产物，模拟生产环境，`类 nginx` 的环境
+详细文档请查看 [docs](./docs) 目录：
+
+- [📚 文档中心](./docs/README.md) - 完整的文档导航
+- [🏗️ 技术方案](./docs/technical-solution.md) - 详细的技术方案文档
+- [🎯 开发指南](./docs/development-guide.md) - 开发规范和最佳实践
+- [📐 系统架构](./docs/architecture.md) - 系统架构图和设计说明
+
+## 🛠️ 技术栈
+
+| 技术                                          | 版本 | 说明         |
+| --------------------------------------------- | ---- | ------------ |
+| [React](https://reactjs.org/)                 | 19.x | 前端框架     |
+| [TypeScript](https://www.typescriptlang.org/) | 5.x  | 类型系统     |
+| [Vite](https://vitejs.dev/)                   | 6.x  | 构建工具     |
+| [Ant Design](https://ant.design/)             | 5.x  | UI 组件库    |
+| [Zustand](https://github.com/pmndrs/zustand)  | 5.x  | 状态管理     |
+| [React Router](https://reactrouter.com/)      | 7.x  | 路由管理     |
+| [Axios](https://axios-http.com/)              | 1.x  | HTTP 客户端  |
+| [Sass](https://sass-lang.com/)                | 1.x  | CSS 预处理器 |
+
+## 🐳 Docker 部署
 
 ```bash
-# 执行该命令前请先构建项目 npm run build
-npm run serve
+# 构建镜像
+docker build -t vite-antd-pc .
+
+# 运行容器
+docker run -p 80:80 vite-antd-pc
+
+# 使用 docker-compose
+docker-compose up -d
 ```
 
-参考 [quick-nginx](https://github.com/luozyiii/quick-nginx)
+## 🤝 贡献
 
-- 备注：[vite preview ](https://cn.vitejs.dev/config/preview-options.html)支持这个功能
+欢迎贡献代码！请查看 [贡献指南](./CONTRIBUTING.md) 了解详情。
 
-```js
-// vite.config.ts
-preview: {
-  proxy: {
-    '/api': {
-      target: 'http:api.com',
-      changeOrigin: true,
-    },
-  }
-};
-```
+### 开发流程
 
-### antd form 表单封装
+1. Fork 项目
+2. 创建特性分支: `git checkout -b feature/amazing-feature`
+3. 提交更改: `git commit -m 'feat: add amazing feature'`
+4. 推送分支: `git push origin feature/amazing-feature`
+5. 提交 Pull Request
 
-#### 基础表单
+## 📄 许可证
 
-- input
-- number
-- password
-- textarea
-- radio
-- select
-- checkbox
-- switch
+本项目基于 [MIT](./LICENSE) 许可证开源。
 
-> checkbox select radio 的 options 支持异步获取
+## 🙏 致谢
 
-#### 日期时间
+感谢所有贡献者和以下开源项目：
 
-- datepicker
-- daterangepicker
-- timepicker
-- timerangepicker
+- [React](https://reactjs.org/) - 用户界面库
+- [Vite](https://vitejs.dev/) - 下一代前端构建工具
+- [Ant Design](https://ant.design/) - 企业级 UI 设计语言
+- [TypeScript](https://www.typescriptlang.org/) - JavaScript 的超集
 
-#### 上传
+---
 
-- upload
-
-#### 自定义表单
-
-- priceUnit
-
-#### 表单联动
-
-/demo/form/linkage
-
-#### 筛选表单 FilterForm + PageTable
-
-> /demo/form/filter
-
-colType 属性
-
-| colType | default | large |
-| ------- | ------- | ----- |
-| xxl     | 4       | 8     |
-| xl      | 6       | 12    |
-| lg      | 8       | 16    |
-| md      | 12      | 24    |
-| xs      | 24      | 24    |
-
-#### useTable
-
-hook/useTable
-
-### axios 二次封装
-
-util/fetch.ts
-
-- 示例
-  page/demo/project/fetch
-
-### 遇到问题？
-
-##### Qa1: Cannot access '...' before initialization? es module 循环引用导致
-
-```ts
-// https://github.com/vitejs/vite/issues/3033
-// vite.config.ts
-export default defineConfig({
-  plugins: [
-    // your plugins,
-    {
-      name: 'singleHMR',
-      handleHotUpdate({ modules }) {
-        modules.map((m) => {
-          m.importedModules = new Set();
-          m.importers = new Set();
-        });
-
-        return modules;
-      },
-    },
-  ],
-});
-```
-
-继续思考其他解决方案
-
-##### Qa2: antd 样式在低版本浏览器无法识别
-
-Ant Design 支持最近 2 个版本的现代浏览器。如果你需要兼容旧版浏览器，请根据实际需求进行降级处理：[样式兼容](https://ant.design/docs/react/compatible-style-cn)
-
-[:where 兼容性](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:where#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E6%80%A7)
-
-##### Qa3: 部分用户（老板）没有关闭网页的习惯，在网页有新版本更新或问题修复时，用户继续使用旧的版本，影响用户体验和后端数据准确性。也有可能会出现报错（文件 404）、白屏的情况。
-
-- 方法一：引入 React 错误边界来解决该问题，通过友好的提醒，让用户刷新浏览器。
-
-```tsx
-// src/component/error-boundary
-import { ErrorBoundary as ErrorBoundaryComp } from 'react-error-boundary';
-import styles from './index.module.scss';
-
-function ErrorFallback({ error }: any) {
-  function goHome() {
-    location.href = '/';
-  }
-
-  return (
-    <div className={styles.ErrorBoundaryBox}>
-      <h1>Something went wrong: </h1>
-      <pre style={{ color: 'red' }}>{error.message}</pre>
-      <button onClick={() => location.reload()}>刷新试试</button>&nbsp;&nbsp;
-      <button onClick={goHome}>返回首页</button>
-    </div>
-  );
-}
-
-const ErrorBoundary: React.FC<any> = ({ children }) => {
-  return <ErrorBoundaryComp FallbackComponent={ErrorFallback}>{children}</ErrorBoundaryComp>;
-};
-
-export default ErrorBoundary;
-```
-
-```tsx
-// src/component/layout
-<ErrorBoundary>
-  <Outlet />
-</ErrorBoundary>
-```
-
-- 方法二：检测网页更新并通知用户刷新，支持 vite、umijs 和 webpack 插件。例如：plugin-web-update-notification
-
-> 我们使用 `react 错误边界`完全可以自己实现类似检测网页更新的功能。
-
-### thank you
+⭐ 如果这个项目对你有帮助，请给我们一个 Star！

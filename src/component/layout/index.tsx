@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { DownOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { Layout, Menu, Dropdown, Space, Button } from 'antd';
+import { DownOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import logoImg from '@/asset/vite.svg';
 import { ErrorBoundary } from '@/component';
 import { businessRoutes } from '@/route';
@@ -9,6 +9,8 @@ import { getAllPath } from '@/route/util';
 import useUserInfoStore from '@/store/useUserInfo';
 import { icons } from './config';
 import styles from './index.module.scss';
+import type { RouteItemProps } from '@/route/type';
+import type { ItemType } from 'antd/es/menu/interface';
 
 const { Sider, Content } = Layout;
 
@@ -22,7 +24,7 @@ const AppLayout = () => {
 
   const openKeys = getAllPath(location.pathname); // 当前展开的key
 
-  const handleClick = ({ key }: any) => {
+  const handleClick = ({ key }: { key: string }) => {
     nav(key);
   };
 
@@ -30,33 +32,33 @@ const AppLayout = () => {
     setCollapsed(!collapsed);
   };
 
-  const treeForeach = useCallback((tree: any, path?: any) => {
+  const treeForeach = useCallback((tree: RouteItemProps[], path?: string[]): ItemType[] => {
     return tree
-      ?.map((data: any) => {
+      ?.map((data: RouteItemProps): ItemType | null => {
         const { index, isMenu, title, path: _path, children, icon, ...other } = data;
+        const menuItem: Record<string, unknown> = { ...other };
         const pathArr = path ? [...path, _path] : [_path];
         if (isMenu === false) {
-          return false;
+          return null;
         }
         if (index) {
-          return false;
+          return null;
         }
         if (icon && typeof icon === 'string') {
-          other.icon = React.createElement(icons[icon]);
+          menuItem.icon = React.createElement(icons[icon]);
         } else if (icon === '' || icon === undefined) {
-          other.icon = undefined;
+          menuItem.icon = undefined;
         } else {
-          other.icon = icon;
+          menuItem.icon = icon;
         }
         return {
-          ...other,
+          ...menuItem,
           label: title,
-          path: _path,
           key: `/${pathArr.join('/')}`,
-          children: children ? treeForeach(children, pathArr) : undefined,
-        };
+          children: children ? treeForeach(children, pathArr.filter(Boolean) as string[]) : undefined,
+        } as ItemType;
       })
-      .filter(Boolean);
+      .filter((item): item is ItemType => item !== null);
   }, []);
 
   const antdMenuTree = useMemo(() => {
@@ -113,7 +115,7 @@ const AppLayout = () => {
                 trigger={null}
                 collapsible
                 collapsed={collapsed}
-                onCollapse={(value: any) => setCollapsed(value)}
+                onCollapse={(value: boolean) => setCollapsed(value)}
               >
                 <Menu
                   className={styles.subMenu}

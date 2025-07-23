@@ -1,15 +1,16 @@
 import React, { useCallback, useState, useRef } from 'react';
-import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
-import type { FormRef } from '@/component/form/form';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import Form from '../form';
 import styles from './index.module.scss';
+import type { FormRef } from '@/component/form/form';
+import type { FormFields } from '@/types/form';
 
 interface FilterFormProps {
-  fields: any[];
+  fields: FormFields;
   showExpand?: boolean; // 展示/收起; 后续用动态布局替代该属性
   defaultExpand?: boolean; // 默认收起
-  onSearch?: (params: any) => void;
+  onSearch?: (params: Record<string, unknown>) => void;
   onReset?: () => void;
 }
 
@@ -35,7 +36,7 @@ const FilterForm: React.FC<FilterFormProps> = ({
       const _values = formRef?.current?.getFieldsValue();
       onSearch?.(_values);
       setLoading(false);
-    } catch (error) {
+    } catch {
       setLoading(false);
     }
   }, [onSearch]);

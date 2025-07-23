@@ -1,6 +1,6 @@
 import { Fragment, forwardRef, useImperativeHandle, createElement, useCallback } from 'react';
-import { Col, Form, Row } from 'antd';
 import { omitBy } from 'lodash-es';
+import { Col, Form, Row } from 'antd';
 import formItem from '@/component/form/item';
 import type { FormInstance, FormProps, FormItemProps } from 'antd';
 
@@ -8,8 +8,8 @@ interface FItemProps extends FormItemProps {
   type: keyof typeof formItem;
   label: string;
   name: string;
-  shouldUpdate?: any;
-  displayRules?: any[]; // 与 shouldUpdate 搭配使用，控制其显示隐藏
+  shouldUpdate?: boolean | ((prevValues: Record<string, unknown>, currentValues: Record<string, unknown>) => boolean);
+  displayRules?: Array<{ name: string; value: string | string[]; operator?: 'eq' | 'ne' | 'in' | 'nin' }>; // 与 shouldUpdate 搭配使用，控制其显示隐藏
   span?: number;
   colType?: 'default' | 'large';
   cProps?: {
@@ -27,7 +27,10 @@ export interface FormRef extends FormInstance {
   reset: () => void;
 }
 
-const FormWarp = ({ fields, grid = false, responsive = false, initialValues = {}, ...other }: FProps, ref: any) => {
+const FormWarp = (
+  { fields, grid = false, responsive = false, initialValues = {}, ...other }: FProps,
+  ref: React.Ref<FormRef>,
+) => {
   const [form] = Form.useForm();
 
   // 区别于resetFields，仅仅重置 values
@@ -43,20 +46,31 @@ const FormWarp = ({ fields, grid = false, responsive = false, initialValues = {}
     form.setFieldsValue(values);
   }, [fields, form, initialValues]);
 
-  const isShow = useCallback((displayRules: any[], getFieldValue: (name: string) => any) => {
-    let isDisplayNum = 0;
-    const len = displayRules?.length;
-    for (let index = 0; index < len; index++) {
-      const ele = displayRules[index];
-      if (ele.value?.includes(getFieldValue(ele.name))) {
-        isDisplayNum++;
+  const isShow = useCallback(
+    (
+      displayRules: Array<{ name: string; value: string | string[]; operator?: 'eq' | 'ne' | 'in' | 'nin' }>,
+      getFieldValue: (name: string) => unknown,
+    ) => {
+      let isDisplayNum = 0;
+      const len = displayRules?.length;
+      for (let index = 0; index < len; index++) {
+        const ele = displayRules[index];
+        const fieldValue = getFieldValue(ele.name);
+        const ruleValue = ele.value;
+        if (Array.isArray(ruleValue) && ruleValue.includes(String(fieldValue))) {
+          isDisplayNum++;
+        } else if (typeof ruleValue === 'string' && ruleValue === String(fieldValue)) {
+          isDisplayNum++;
+        }
       }
-    }
-    return len === isDisplayNum;
-  }, []);
+      return len === isDisplayNum;
+    },
+    [],
+  );
 
   // 暴露的方法
   useImperativeHandle(ref, () => ({
+    ...form,
     getFieldsValue: () => {
       const params = form.getFieldsValue(true);
       // 只剔除null、undefined; 不剔除空字符串
@@ -66,7 +80,7 @@ const FormWarp = ({ fields, grid = false, responsive = false, initialValues = {}
     },
     validateFields: async () => await form.validateFields(),
     resetFields: () => form.resetFields(),
-    setFieldsValue: (values: any) => form.setFieldsValue(values),
+    setFieldsValue: (values: Record<string, unknown>) => form.setFieldsValue(values),
     reset: resetFiledsValues,
   }));
 
@@ -86,7 +100,7 @@ const FormWarp = ({ fields, grid = false, responsive = false, initialValues = {}
                       if (isShow(displayRules, getFieldValue)) {
                         return (
                           <Form.Item {...itemProps}>
-                            {createElement(formItem[type] as React.FC, cProps as any)}
+                            {createElement(formItem[type] as React.ComponentType<Record<string, unknown>>, cProps)}
                           </Form.Item>
                         );
                       }
@@ -99,7 +113,7 @@ const FormWarp = ({ fields, grid = false, responsive = false, initialValues = {}
               return (
                 <Fragment key={index}>
                   <Form.Item shouldUpdate={shouldUpdate} {...itemProps}>
-                    {createElement(formItem[type] as React.FC, cProps as any)}
+                    {createElement(formItem[type] as React.ComponentType<Record<string, unknown>>, cProps)}
                   </Form.Item>
                 </Fragment>
               );
@@ -139,7 +153,7 @@ const FormWarp = ({ fields, grid = false, responsive = false, initialValues = {}
                           if (isShow(displayRules, getFieldValue)) {
                             return (
                               <Form.Item {...itemProps}>
-                                {createElement(formItem[type] as React.FC, cProps as any)}
+                                {createElement(formItem[type] as React.ComponentType<Record<string, unknown>>, cProps)}
                               </Form.Item>
                             );
                           }
@@ -152,7 +166,7 @@ const FormWarp = ({ fields, grid = false, responsive = false, initialValues = {}
                   return (
                     <Col key={index} span={span} {...responsiveObj}>
                       <Form.Item shouldUpdate={shouldUpdate} {...itemProps}>
-                        {createElement(formItem[type] as React.FC, cProps as any)}
+                        {createElement(formItem[type] as React.ComponentType<Record<string, unknown>>, cProps)}
                       </Form.Item>
                     </Col>
                   );

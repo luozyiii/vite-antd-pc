@@ -1,4 +1,6 @@
-const fields: any[] = [
+import type { FormFields } from '@/types/form';
+
+const fields: FormFields = [
   {
     type: 'input',
     label: '姓名',
@@ -28,7 +30,8 @@ const fields: any[] = [
         value: ['secrecy'],
       },
     ],
-    shouldUpdate: (prevValues: any, currentValues: any) => prevValues.gender !== currentValues.gender,
+    shouldUpdate: (prevValues: Record<string, unknown>, currentValues: Record<string, unknown>) =>
+      prevValues.gender !== currentValues.gender,
     cProps: {},
   },
 ];

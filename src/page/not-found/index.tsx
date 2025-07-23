@@ -1,4 +1,5 @@
 import styles from './index.module.scss';
+
 export default function ErrorPage() {
   return (
     <div className={styles.p404}>

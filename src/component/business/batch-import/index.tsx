@@ -1,18 +1,20 @@
 import { useCallback } from 'react';
 import { Upload, Button, message } from 'antd';
 import type { UploadProps } from 'antd';
+import type { AxiosResponse } from 'axios';
 
 interface ComponentProps extends UploadProps {
-  fetch: (params: object) => Promise<any>;
+  fetch: (params: FormData) => Promise<AxiosResponse<Blob>>;
   name?: string; // 上传文件的字段名，默认file
   onUpdate?: () => void;
 }
 
 const Component = ({ fetch, name = 'file', onUpdate, children, ...other }: ComponentProps) => {
   const handleImport = useCallback(
-    async ({ file }: any) => {
+    async (options: { file: unknown; onSuccess?: (response: unknown) => void; onError?: (error: Error) => void }) => {
+      const { file } = options;
       const data = new FormData();
-      data.append(name, file);
+      data.append(name, file as File);
       const res = await fetch(data);
       if (res.data.type.includes('application/json')) {
         const reader = new FileReader();

@@ -1,14 +1,21 @@
 import { useState, useCallback, useEffect } from 'react';
 import type { PaginationProps, TableProps } from 'antd';
 
-interface UseTableParams {
-  fetch: (params: any) => Promise<any>;
-  fetchParams?: object; // 请求默认带上的参数
+interface ApiResponse<T = unknown> {
+  data: {
+    list: T[];
+    total: number;
+  };
 }
 
-type UseTableReturn = [
-  TableProps<any> & {
-    dataSource: any[];
+interface UseTableParams<T = unknown> {
+  fetch: (params: Record<string, unknown>) => Promise<ApiResponse<T>>;
+  fetchParams?: Record<string, unknown>; // 请求默认带上的参数
+}
+
+type UseTableReturn<T = unknown> = [
+  TableProps<T> & {
+    dataSource: T[];
     loading: boolean;
     pagination: PaginationProps;
     rowSelection?: {
@@ -16,17 +23,17 @@ type UseTableReturn = [
       onChange: (newSelectedRowKeys: React.Key[]) => void;
     };
   },
-  (params: any) => void, // onSearch
+  (params?: Record<string, unknown>) => void, // onSearch
   () => void, // onReset
   () => void, // onRefresh
 ];
 
 const defaultPageSize = 10; // 分页选择默认值
 
-const useTable = ({ fetch, fetchParams }: UseTableParams): UseTableReturn => {
-  const [dataSource, setDataSource] = useState([]);
+const useTable = <T = unknown>({ fetch, fetchParams }: UseTableParams<T>): UseTableReturn<T> => {
+  const [dataSource, setDataSource] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<Record<string, unknown>>({});
   // 分页
   const [pagination, setPagination] = useState({
     current: 1,
@@ -36,7 +43,7 @@ const useTable = ({ fetch, fetchParams }: UseTableParams): UseTableReturn => {
   });
 
   const getDataSource = useCallback(
-    async (page = 1, pageSize = defaultPageSize, params?: any) => {
+    async (page = 1, pageSize = defaultPageSize, params?: Record<string, unknown>) => {
       setLoading(true);
       try {
         const _formData = params ? params : formData;
@@ -50,15 +57,15 @@ const useTable = ({ fetch, fetchParams }: UseTableParams): UseTableReturn => {
         if (params) {
           setFormData(params);
         }
-        setDataSource(res.list);
+        setDataSource(res.data.list);
         setPagination({
           ...pagination,
-          total: res.total || 0,
+          total: res.data.total || 0,
           current: page,
           pageSize: pageSize,
         });
         setLoading(false);
-      } catch (error) {
+      } catch {
         setLoading(false);
       }
     },
@@ -84,7 +91,7 @@ const useTable = ({ fetch, fetchParams }: UseTableParams): UseTableReturn => {
 
   // 查询
   const onSearch = useCallback(
-    (params?: any) => {
+    (params?: Record<string, unknown>) => {
       getDataSource(1, pagination.pageSize, params);
     },
     [pagination.pageSize, getDataSource],
@@ -102,7 +109,7 @@ const useTable = ({ fetch, fetchParams }: UseTableParams): UseTableReturn => {
 
   useEffect(() => {
     getDataSource();
-  }, []);
+  }, [getDataSource]);
 
   return [
     {

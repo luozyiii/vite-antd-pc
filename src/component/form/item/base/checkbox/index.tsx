@@ -2,10 +2,24 @@ import { useCallback, useEffect, useState } from 'react';
 import { Checkbox } from 'antd';
 import type { CheckboxGroupProps } from 'antd/es/checkbox/Group';
 
+interface CheckboxOption {
+  label: string;
+  value: string | number;
+  disabled?: boolean;
+  [key: string]: unknown;
+}
+
+interface ApiResponse {
+  data?: CheckboxOption[];
+  success?: boolean;
+  message?: string;
+  [key: string]: unknown;
+}
+
 interface CustomeCheckboxGroupProps extends CheckboxGroupProps {
-  fetch?: (params?: object) => Promise<any>;
+  fetch?: (params?: object) => Promise<ApiResponse>;
   fetchParams?: object;
-  responseHandler?: (res: any) => any;
+  responseHandler?: (res: ApiResponse) => CheckboxOption[];
   fieldNames?: { label: string; value: string };
 }
 
@@ -15,26 +29,26 @@ const Comp = ({
   fetch,
   fetchParams,
   fieldNames,
-  responseHandler = (res: any) => res,
+  responseHandler = (res: ApiResponse) => res.data || [],
   ...other
 }: CustomeCheckboxGroupProps) => {
-  const [ops, setOps] = useState<any[]>([]);
+  const [ops, setOps] = useState<CheckboxOption[]>([]);
 
   const getOptions = useCallback(async () => {
     try {
       if (fetch) {
         const res = responseHandler(await fetch({ ...fetchParams }));
         const lastRes = fieldNames
-          ? res.map((item: any) => {
+          ? res.map((item: CheckboxOption) => {
               return {
-                label: item[fieldNames.label],
-                value: item[fieldNames.value],
+                label: String(item[fieldNames.label]),
+                value: item[fieldNames.value] as string | number,
               };
             })
           : res;
-        setOps(lastRes);
+        setOps(lastRes as CheckboxOption[]);
       } else {
-        setOps(options || []);
+        setOps((options as CheckboxOption[]) || []);
       }
     } finally {
       /* empty */

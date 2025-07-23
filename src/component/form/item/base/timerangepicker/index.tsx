@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
-import { TimePicker } from 'antd';
 import dayjs from 'dayjs';
+import { TimePicker } from 'antd';
 import type { TimeRangePickerProps } from 'antd';
 import type { Dayjs } from 'dayjs';
 
@@ -29,11 +29,10 @@ const Comp = ({ value, onChange, format = 'HH:mm:ss', ...other }: CustomeRangePi
     [format, onChange],
   );
   const _v: valueOriginalProps = useMemo(() => {
-    return value && value.length
-      ? value.map((v) => {
-          return v ? dayjs(v, format as string) : null;
-        })
-      : null;
+    if (value && value.length >= 2) {
+      return [value[0] ? dayjs(value[0], format as string) : null, value[1] ? dayjs(value[1], format as string) : null];
+    }
+    return null;
   }, [format, value]);
 
   return <RangePicker {...other} format={format} value={_v} onChange={handleOnChange} />;

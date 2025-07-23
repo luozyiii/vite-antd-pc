@@ -1,46 +1,49 @@
-import { message } from 'antd';
 import axios from 'axios';
-import type { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
+import { message } from 'antd';
+import type { AxiosRequestConfig, AxiosResponse, Method, InternalAxiosRequestConfig } from 'axios';
 
 interface FetchOptions extends AxiosRequestConfig {
   ignoreToken?: boolean | undefined; // 忽略 token 的添加
   ignoreMsg?: boolean | undefined; // 忽略信息提示
 }
 
-const requestInterceptorsSuccess = (config: FetchOptions) => {
+const requestInterceptorsSuccess = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
   // 在请求发送之前做些什么
-  const { ignoreToken, headers = {}, method, data, ...other }: any = config || {};
-  const lowerMethod = method?.toLocaleLowerCase();
-  other.method = lowerMethod;
+  const { method, data } = config;
+  const lowerMethod = method?.toLowerCase();
+
   //  请求参数
-  if (data) {
+  if (data && lowerMethod) {
     if (['get', 'delete'].includes(lowerMethod)) {
-      other.params = data;
-    } else {
-      other.data = data;
+      config.params = data;
+      delete config.data;
     }
   }
+
   // add token
   const token = 'hi token';
+  const ignoreToken = (config as unknown as Record<string, unknown>).ignoreToken;
   if (!ignoreToken && token) {
-    headers.Authorization = token;
-    other.headers = headers;
+    config.headers = config.headers || {};
+    config.headers.Authorization = token;
   }
-  return other;
+
+  return config;
 };
 
-const requestInterceptorsError = (error: any) => {
+const requestInterceptorsError = (error: unknown) => {
   // 对请求错误做些什么
   return Promise.reject(error);
 };
 
 const responseInterceptorsSuccess = (response: AxiosResponse) => {
   // 对响应数据做些什么
-  const {
-    data: { code, desc },
-    config: { ignoreMsg, responseType },
-  } = response;
-  if (responseType !== 'blob') {
+  const { data, config } = response;
+  const ignoreMsg = (config as unknown as Record<string, unknown>).ignoreMsg;
+  const responseType = config.responseType;
+
+  if (responseType !== 'blob' && data) {
+    const { code, desc } = data;
     if (code !== 2000 && !ignoreMsg) {
       const _desc = desc || '未知错误';
       message.error(_desc);
@@ -49,7 +52,7 @@ const responseInterceptorsSuccess = (response: AxiosResponse) => {
   return response;
 };
 
-const responseInterceptorsError = (error: any) => {
+const responseInterceptorsError = (error: unknown) => {
   // 对响应错误做些什么
   message.error('网络异常，请稍后重试！');
   return Promise.reject(error);

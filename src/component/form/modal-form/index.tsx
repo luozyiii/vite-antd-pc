@@ -1,12 +1,13 @@
 import { useCallback, useRef, useState } from 'react';
 import { Button, Modal } from 'antd';
-import type { FormRef } from '@/component/form/form';
 import Form from '../form';
+import type { FormRef } from '@/component/form/form';
+import type { FormFields } from '@/types/form';
 
 interface ModalFormProps {
-  fields: any[];
+  fields: FormFields;
   children: React.ReactElement | string;
-  onSearch?: (params: any) => void;
+  onSearch?: (params: Record<string, unknown>) => void;
 }
 
 const ModalForm: React.FC<ModalFormProps> = ({ fields, children }: ModalFormProps) => {

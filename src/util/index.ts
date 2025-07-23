@@ -12,7 +12,7 @@ export function sleep(time = 300) {
  * @param content blob 文本内容
  * @param fileName 下载的文件名
  */
-export const downloadBlob = (content: any, fileName: string) => {
+export const downloadBlob = (content: BlobPart, fileName: string) => {
   const blob = new Blob([content]);
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');

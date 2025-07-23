@@ -98,13 +98,15 @@ const treeData = [
   },
 ];
 
-const fields: any[] = [
+import type { FormFields } from '@/types/form';
+
+const fields: FormFields = [
   {
     type: 'radio',
     label: '单选框',
     name: 'radio',
     // rules: [{ required: true, message: '请选择!' }],
-    shouldUpdate: true,
+    shouldUpdate: () => true,
     cProps: {
       // direction: 'vertical',
       options: [
@@ -121,7 +123,7 @@ const fields: any[] = [
     cProps: {
       fetch: getOptions,
       fetchParams: { role: 'ROLEA' },
-      responseHandler: (res: any) => res.data,
+      responseHandler: (res: { data: Array<{ name: string; id: string | number }> }) => res.data,
       fieldNames: { label: 'name', value: 'id' },
     },
   },
@@ -143,7 +145,7 @@ const fields: any[] = [
     cProps: {
       fetch: getOptions,
       fetchParams: { role: 'ROLEA' },
-      responseHandler: (res: any) => res.data,
+      responseHandler: (res: { data: Array<{ name: string; id: string | number }> }) => res.data,
       fieldNames: { label: 'name', value: 'id' },
     },
   },
@@ -168,7 +170,9 @@ const fields: any[] = [
     cProps: {
       fetch: getOptions,
       fetchParams: { role: 'ROLEA' },
-      responseHandler: (res: any) => res.data,
+      responseHandler: (res: {
+        data: Array<{ name: string; id: string | number; sub?: Array<{ name: string; id: string | number }> }>;
+      }) => res.data,
       fieldNames: { label: 'name', value: 'id' },
       placeholder: '请选择xxxxxx',
     },
@@ -191,7 +195,9 @@ const fields: any[] = [
     cProps: {
       fetch: getOptions,
       fetchParams: { role: 'ROLEA' },
-      responseHandler: (res: any) => res.data,
+      responseHandler: (res: {
+        data: Array<{ name: string; id: string | number; sub?: Array<{ name: string; id: string | number }> }>;
+      }) => res.data,
       fieldNames: { label: 'name', value: 'id', children: 'sub' },
       placeholder: '请选择xxxxxx',
     },

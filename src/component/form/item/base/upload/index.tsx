@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Upload } from 'antd';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import api from '@/api';
 import DraggableUploadListItem from './DraggableUploadListItem';
 import styles from './index.module.scss';
@@ -35,7 +35,7 @@ const Comp = ({ maxCount = 1, value: fileList = [], onChange, ...other }: Custom
   );
 
   const handleOnChange: UploadProps['onChange'] = useCallback(
-    ({ fileList: newFileList }: any) => {
+    ({ fileList: newFileList }: { fileList: UploadFile[] }) => {
       newFileList = newFileList.slice(0);
       newFileList = newFileList.map((file: UploadFile) => {
         if (file.response) {
@@ -48,14 +48,16 @@ const Comp = ({ maxCount = 1, value: fileList = [], onChange, ...other }: Custom
     [onChange],
   );
 
-  const customRequest = useCallback(async ({ file, onSuccess }: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const customRequest = useCallback(async (options: any) => {
+    const { file, onSuccess } = options;
     setLoading(true);
     const data = new FormData();
     data.append('type', 'PRIVATELY');
-    data.append('file', file);
-    data.append('fileName', file?.name);
+    data.append('file', file as File);
+    data.append('fileName', (file as File)?.name);
     const res = await api.common.upload(data);
-    onSuccess(res.data?.data);
+    onSuccess?.(res.data?.data);
     setLoading(false);
   }, []);
 

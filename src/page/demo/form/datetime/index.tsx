@@ -1,13 +1,12 @@
 import { useCallback, useRef, useState } from 'react';
 import { Button, Card, Space } from 'antd';
-import { PageContent } from '@/component';
-import { Form } from '@/component';
-import type { FormRef } from '@/component/form/form';
+import { PageContent, Form } from '@/component';
 import fields from './config';
+import type { FormRef } from '@/component/form/form';
 
 const DateTimeForm: React.FC = () => {
   const [preStr, setPreStr] = useState('');
-  const formRef = useRef<FormRef>();
+  const formRef = useRef<FormRef>(null);
 
   const handleSubmit = useCallback(async () => {
     await formRef?.current?.validateFields();

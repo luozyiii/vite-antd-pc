@@ -2,11 +2,25 @@ import { useCallback, useEffect, useState } from 'react';
 import { Radio, Space } from 'antd';
 import type { RadioGroupProps } from 'antd';
 
+interface RadioOption {
+  label: string;
+  value: string | number;
+  disabled?: boolean;
+  [key: string]: unknown;
+}
+
+interface ApiResponse {
+  data?: RadioOption[];
+  success?: boolean;
+  message?: string;
+  [key: string]: unknown;
+}
+
 interface CustomeRadioGroupProps extends RadioGroupProps {
   direction?: 'horizontal' | 'vertical';
-  fetch?: (params?: object) => Promise<any>;
+  fetch?: (params?: object) => Promise<ApiResponse>;
   fetchParams?: object;
-  responseHandler?: (res: any) => any;
+  responseHandler?: (res: ApiResponse) => RadioOption[];
   fieldNames?: { label: string; value: string };
 }
 
@@ -17,26 +31,26 @@ const Comp = ({
   fetch,
   fetchParams,
   fieldNames,
-  responseHandler = (res: any) => res,
+  responseHandler = (res: ApiResponse) => res.data || [],
   ...other
 }: CustomeRadioGroupProps) => {
-  const [ops, setOps] = useState<any[]>([]);
+  const [ops, setOps] = useState<RadioOption[]>([]);
 
   const getOptions = useCallback(async () => {
     try {
       if (fetch) {
         const res = responseHandler(await fetch({ ...fetchParams }));
         const lastRes = fieldNames
-          ? res.map((item: any) => {
+          ? res.map((item: RadioOption) => {
               return {
-                label: item[fieldNames.label],
-                value: item[fieldNames.value],
+                label: String(item[fieldNames.label]),
+                value: item[fieldNames.value] as string | number,
               };
             })
           : res;
-        setOps(lastRes);
+        setOps(lastRes as RadioOption[]);
       } else {
-        setOps(options || []);
+        setOps((options as RadioOption[]) || []);
       }
     } finally {
       /* empty */
@@ -50,7 +64,7 @@ const Comp = ({
   return (
     <Radio.Group {...other}>
       <Space direction={direction}>
-        {ops?.map((option: any, index: number) => {
+        {ops?.map((option: RadioOption, index: number) => {
           const { value, label, ...rest } = option;
           return (
             <Radio key={index} value={value} {...rest}>
